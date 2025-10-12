@@ -1,6 +1,8 @@
 /*
  * Navigation Library
  * Provides utility functions for navigation-related tasks.
+ * 
+ * @module libs/navigation
  */
 
 // Types

@@ -1,6 +1,8 @@
 /**
  * Site
  * Library functions for site-wide data
+ * 
+ * @module libs/site
  */
 
 /**
@@ -10,7 +12,7 @@
  * @returns Site Name
  */
 const siteName = () => {
-    // TODO: Fetch from a CMS or config file
+    // TODO: #1 Fetch from a CMS or config file @jamesl1500
 
     // Return static site name for now
     return "Latten Creative";
@@ -88,3 +90,5 @@ const siteLocale = () => {
 const siteFavicon = () => {
     return "/favicon.ico";
 }
+
+export { siteName, siteTagline, siteAuthor, siteDescription, siteKeywords, siteUrl, siteLocale, siteFavicon };

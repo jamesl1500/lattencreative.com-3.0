@@ -237,6 +237,28 @@ img.image-fluid {
 // Pages
 .page{
 
+    .page-inner{
+
+        .page-content{
+
+            .page-section{
+
+                .page-section-title{
+
+                    h2{
+                        font-size: 24px;
+                        margin-bottom: $spacing-unit * 2;
+                        color: $primary-text-color;
+                    }
+
+                    p{
+                        font-size: $font-size-base;
+                        color: $secondary-text-color;
+                    }
+                }
+            }
+        }
+    }
 }
 
 // Page: Home
@@ -255,6 +277,38 @@ img.image-fluid {
                 height: 300px;
                 position: relative;
                 object-fit: cover;
+            }
+
+            .page-section-services{
+
+                .page-section-inner{
+
+                    .page-section-content{
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 10px;
+                        justify-content: space-between;
+
+                        .service-card{
+                            border: 1px solid #ddd;
+                            border-radius: $border-radius;
+                            padding: $spacing-unit * 2;
+                            margin-bottom: $spacing-unit * 2;
+                            background-color: $secondary-background-color;
+                            box-shadow: $box-shadow;
+                            flex: 1 1 calc(33% - 10px);
+
+                            h3{
+                                margin-top: 0;
+                                color: $primary-text-color;
+                            }
+
+                            p{
+                                color: $secondary-text-color;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
