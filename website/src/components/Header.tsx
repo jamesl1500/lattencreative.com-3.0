@@ -1,11 +1,32 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {getCTAItems, getNavItems, getSiteLogo, getSiteName} from "@/libs/header";
 
 const Header = () => {
+    // State for scroll detection
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    // Effect to handle scroll events
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop = window.scrollY;
+            setIsScrolled(scrollTop > 50); // Add blur after scrolling 50px
+        };
+
+        // Add scroll event listener
+        window.addEventListener('scroll', handleScroll);
+
+        // Cleanup event listener on component unmount
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
     // TODO: Integrate dynamic data fetching
 
     // Get site name
@@ -21,7 +42,7 @@ const Header = () => {
     const ctaItems = getCTAItems();
 
     return (
-        <header className="header">
+        <header className={`header ${isScrolled ? 'header-scrolled' : ''}`}>
             <div className="header-inner container">
                 <div className="header-branding">
                     <Link href="/" className="header-logo">

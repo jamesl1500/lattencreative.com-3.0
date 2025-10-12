@@ -57,7 +57,7 @@ const getServicesData = (): Service[] => {
             icon: "/icons/digital-marketing.svg",
             url: "/services/digital-marketing",
             category: "Marketing"
-        },1
+        },
     ];
 };
 
