@@ -5,6 +5,7 @@ import "../styles/styles.scss"
 
 // Components
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 // Site data
 import { 
@@ -67,9 +68,7 @@ export default function RootLayout({
         <div className="website-content-container">
           {children}
         </div>
-        <div className="footer-container">
-          <p>© 2024 My Website</p>
-        </div>
+        <Footer />
       </body>
     </html>
   );
