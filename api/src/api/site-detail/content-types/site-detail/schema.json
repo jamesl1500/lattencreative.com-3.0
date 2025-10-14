@@ -1,0 +1,56 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_details",
+  "info": {
+    "singularName": "site-detail",
+    "pluralName": "site-details",
+    "displayName": "SiteDetail"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "siteName": {
+      "type": "string"
+    },
+    "siteUrl": {
+      "type": "string"
+    },
+    "siteTagline": {
+      "type": "string"
+    },
+    "siteDescription": {
+      "type": "string"
+    },
+    "siteAuthor": {
+      "type": "string"
+    },
+    "sitekeywords": {
+      "type": "string"
+    },
+    "siteLocale": {
+      "type": "string"
+    },
+    "siteFavicon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "siteLogo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

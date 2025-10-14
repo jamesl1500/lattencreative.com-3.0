@@ -3836,6 +3836,22 @@ img.image-fluid {
                     margin-bottom: $spacing-unit * 3;
                 }
 
+                .post-tags {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: $spacing-unit;
+                    margin-bottom: $spacing-unit * 2;
+
+                    .tag {
+                        background: lighten($primary-color, 90%);
+                        color: $primary-color;
+                        padding: $spacing-unit / 2 $spacing-unit;
+                        border-radius: $border-radius;
+                        font-size: $font-size-small;
+                        font-weight: 500;
+                    }
+                }
+
                 .post-author {
                     .author-info {
                         .author-name {
@@ -3896,11 +3912,13 @@ img.image-fluid {
             }
         }
 
-        .blog-post-card {
+        .blog-post-card,
+        .featured-post-card {
             background: white;
             border-radius: $border-radius * 2;
             overflow: hidden;
             box-shadow: $box-shadow;
+            border: 1px solid rgba(0,0,0,.1);
             @include transition(transform, box-shadow);
 
             &:hover {
@@ -4063,6 +4081,26 @@ img.image-fluid {
                 .privacy-note {
                     font-size: $font-size-small;
                     opacity: 0.8;
+                }
+
+                .form-message {
+                    margin-top: $spacing-unit * 2;
+                    padding: $spacing-unit * 2;
+                    border-radius: $border-radius;
+                    text-align: center;
+                    font-size: $font-size-small;
+                    
+                    &.success {
+                        background-color: #d4edda;
+                        color: #155724;
+                        border: 1px solid #c3e6cb;
+                    }
+                    
+                    &.error {
+                        background-color: #f8d7da;
+                        color: #721c24;
+                        border: 1px solid #f5c6cb;
+                    }
                 }
             }
         }
@@ -4504,6 +4542,9 @@ img.image-fluid {
                         white-space: nowrap;
                         background-color: $primary-color;
                         border-color: $primary-color;
+                        color: white;
+                        padding: $spacing-unit * 1.5 $spacing-unit * 3;
+                        border: 1px solid $primary-color;
 
                         &:hover {
                             background-color: darken($primary-color, 10%);
@@ -5028,5 +5069,91 @@ img.image-fluid {
                 padding: $spacing-unit * 3;
             }
         }
+    }
+}
+
+// Loading Skeleton Styles for Blog
+.loading-skeleton {
+    .skeleton-title {
+        height: 32px;
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+        border-radius: 4px;
+        margin-bottom: $spacing-unit * 4;
+        width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .blog-posts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: $spacing-unit * 4;
+
+        .skeleton {
+            background: white;
+            border-radius: $border-radius * 2;
+            overflow: hidden;
+            box-shadow: $box-shadow;
+
+            .skeleton-image {
+                height: 200px;
+                background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+                background-size: 200% 100%;
+                animation: shimmer 1.5s infinite;
+            }
+
+            .skeleton-content {
+                padding: $spacing-unit * 3;
+
+                .skeleton-text {
+                    height: 16px;
+                    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+                    background-size: 200% 100%;
+                    animation: shimmer 1.5s infinite;
+                    border-radius: 4px;
+                    margin-bottom: $spacing-unit;
+
+                    &.skeleton-text-small {
+                        width: 60%;
+                    }
+
+                    &.skeleton-text-medium {
+                        width: 80%;
+                    }
+
+                    &.skeleton-text-large {
+                        width: 100%;
+                        height: 20px;
+                        margin-bottom: $spacing-unit * 2;
+                    }
+                }
+
+                .skeleton-tags {
+                    display: flex;
+                    gap: $spacing-unit;
+                    margin-top: $spacing-unit * 2;
+
+                    .skeleton-tag {
+                        width: 60px;
+                        height: 20px;
+                        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+                        background-size: 200% 100%;
+                        animation: shimmer 1.5s infinite;
+                        border-radius: 10px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
     }
 }

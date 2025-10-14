@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getBlogPostBySlug, getRelatedPosts, type BlogPost } from "../../../libs/data/blog";
-import { generateBlogPostMetadata } from "../../../libs/metadata";
+import { getBlogPostBySlug, getRelatedPosts, type BlogPost } from "@/libs/data/blog";
+import { generateBlogPostMetadata } from "@/libs/metadata";
+import SocialShareButtons from "@/components/SocialShareButtons";
+import NewsletterForm from "@/components/NewsletterForm";
 
 // This would typically come from your CMS or API
 interface BlogPostPageProps {
@@ -11,7 +13,7 @@ interface BlogPostPageProps {
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const post = getBlogPostBySlug(params.blog_post_id);
+  const post = await getBlogPostBySlug(params.blog_post_id);
   
   if (!post) {
     return generateBlogPostMetadata(
@@ -26,13 +28,13 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     post.description,
     params.blog_post_id,
     post.publishedDate,
-    post.tags,
-    post.image
+    Array.isArray(post.tags) ? post.tags : (post.tags as string).split(',').map(tag => tag.trim()),
+    typeof post.image === 'string' ? post.image : post.image?.url
   );
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = getBlogPostBySlug(params.blog_post_id);
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const post = await getBlogPostBySlug(params.blog_post_id);
   
   if (!post) {
     return (
@@ -50,7 +52,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     );
   }
 
-  const relatedPosts = getRelatedPosts(post.id);
+  const relatedPosts = await getRelatedPosts(post.id);
 
   return (
     <div className="page page-blog-post">
@@ -100,7 +102,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             {post.image && (
               <div className="post-featured-image">
                 <img 
-                  src={post.image} 
+                  src={typeof post.image === 'string' ? post.image : (process.env.NEXT_PUBLIC_STRAPI_URL + post.image.url)} 
                   alt={post.title}
                   className="image-fluid"
                 />
@@ -124,8 +126,8 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               <div className="post-tags-section">
                 <h4>Tags</h4>
                 <div className="post-tags">
-                  {post.tags.map((tag) => (
-                    <span key={tag} className="tag">{tag}</span>
+                  {(Array.isArray(post.tags) ? post.tags : (post.tags as string).split(",")).map((tag: string) => (
+                    <span key={tag} className="tag">{tag.trim()}</span>
                   ))}
                 </div>
               </div>
@@ -133,17 +135,10 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               {/* Share Section */}
               <div className="post-share-section">
                 <h4>Share this article</h4>
-                <div className="share-buttons">
-                  <button className="share-btn twitter">
-                    Share on Twitter
-                  </button>
-                  <button className="share-btn linkedin">
-                    Share on LinkedIn
-                  </button>
-                  <button className="share-btn facebook">
-                    Share on Facebook
-                  </button>
-                </div>
+                <SocialShareButtons 
+                  title={post.title}
+                  description={post.description}
+                />
               </div>
             </div>
           </div>
@@ -160,7 +155,13 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                     <Link href={`/blog/${relatedPost.slug}`} className="post-link">
                       <div className="post-image">
                         <img 
-                          src={relatedPost.image || '/images/blog/default-blog.jpg'} 
+                          src={
+                            relatedPost.image 
+                              ? (typeof relatedPost.image === 'string' 
+                                  ? relatedPost.image 
+                                  : (process.env.NEXT_PUBLIC_STRAPI_URL + relatedPost.image.url))
+                              : '/images/blog/default-blog.jpg'
+                          } 
                           alt={relatedPost.title}
                           className="image-fluid"
                         />
@@ -183,33 +184,6 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
           </section>
         )}
-
-        {/* Newsletter CTA */}
-        <section className="blog-section blog-section-newsletter-cta">
-          <div className="blog-section-inner container">
-            <div className="newsletter-cta">
-              <div className="newsletter-content">
-                <h2>Stay Updated with Our Latest Insights</h2>
-                <p>
-                  Get expert tips, industry trends, and actionable advice delivered to your inbox.
-                </p>
-                <form className="newsletter-form">
-                  <div className="form-group">
-                    <input 
-                      type="email" 
-                      placeholder="Enter your email address"
-                      className="email-input"
-                      required
-                    />
-                    <button type="submit" className="btn btn-primary">
-                      Subscribe
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </section>
       </div>
     </div>
   );

@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "newsletter_subscriptions",
+  "info": {
+    "singularName": "newsletter-subscription",
+    "pluralName": "newsletter-subscriptions",
+    "displayName": "Newsletter Subscription",
+    "description": "Email subscriptions for newsletter"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "email": {
+      "type": "email",
+      "required": true,
+      "unique": true
+    },
+    "subscribedAt": {
+      "type": "datetime",
+      "default": "now"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    },
+    "source": {
+      "type": "string",
+      "default": "website"
+    }
+  }
+}

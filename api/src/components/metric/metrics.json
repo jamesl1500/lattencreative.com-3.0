@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_metric_metrics",
+  "info": {
+    "displayName": "Metrics",
+    "icon": "stack"
+  },
+  "options": {},
+  "attributes": {
+    "Description": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

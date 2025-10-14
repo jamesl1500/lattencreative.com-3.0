@@ -1,0 +1,28 @@
+{
+  "node": {
+    "4095c57ad03f971d7714a27d09898432d11ee7513b": {
+      "workers": {
+        "app/(payload)/admin/[[...segments]]/page": {
+          "moduleId": "(rsc)/./node_modules/.pnpm/next@15.4.4_@babel+core@7.2_449a82f09df25813f52e4b9288d3d216/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22A%3A%5C%5CProjects%5C%5Clattencreative.com-3.0%5C%5Capi%5C%5Csrc%5C%5Capp%5C%5C(payload)%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%224095c57ad03f971d7714a27d09898432d11ee7513b%22%2C%22exportedName%22%3A%22%24%24RSC_SERVER_ACTION_0%22%7D%5D%5D%2C%5B%22A%3A%5C%5CProjects%5C%5Clattencreative.com-3.0%5C%5Capi%5C%5Cnode_modules%5C%5C.pnpm%5C%5C%40payloadcms%2Bnext%403.59.1_%40ty_1f49fa7324658d2cc2f96e0f0b7527fb%5C%5Cnode_modules%5C%5C%40payloadcms%5C%5Cnext%5C%5Cdist%5C%5Clayouts%5C%5CRoot%5C%5Cindex.js%22%2C%5B%7B%22id%22%3A%22608c221b7a15a93ddc460c51c6cdaa821c5de5293d%22%2C%22exportedName%22%3A%22%24%24RSC_SERVER_ACTION_0%22%7D%5D%5D%5D&__client_imported__=!",
+          "async": true
+        }
+      },
+      "layer": {
+        "app/(payload)/admin/[[...segments]]/page": "rsc"
+      }
+    },
+    "608c221b7a15a93ddc460c51c6cdaa821c5de5293d": {
+      "workers": {
+        "app/(payload)/admin/[[...segments]]/page": {
+          "moduleId": "(rsc)/./node_modules/.pnpm/next@15.4.4_@babel+core@7.2_449a82f09df25813f52e4b9288d3d216/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22A%3A%5C%5CProjects%5C%5Clattencreative.com-3.0%5C%5Capi%5C%5Csrc%5C%5Capp%5C%5C(payload)%5C%5Clayout.tsx%22%2C%5B%7B%22id%22%3A%224095c57ad03f971d7714a27d09898432d11ee7513b%22%2C%22exportedName%22%3A%22%24%24RSC_SERVER_ACTION_0%22%7D%5D%5D%2C%5B%22A%3A%5C%5CProjects%5C%5Clattencreative.com-3.0%5C%5Capi%5C%5Cnode_modules%5C%5C.pnpm%5C%5C%40payloadcms%2Bnext%403.59.1_%40ty_1f49fa7324658d2cc2f96e0f0b7527fb%5C%5Cnode_modules%5C%5C%40payloadcms%5C%5Cnext%5C%5Cdist%5C%5Clayouts%5C%5CRoot%5C%5Cindex.js%22%2C%5B%7B%22id%22%3A%22608c221b7a15a93ddc460c51c6cdaa821c5de5293d%22%2C%22exportedName%22%3A%22%24%24RSC_SERVER_ACTION_0%22%7D%5D%5D%5D&__client_imported__=!",
+          "async": true
+        }
+      },
+      "layer": {
+        "app/(payload)/admin/[[...segments]]/page": "rsc"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "BeeIPR5+GXiwSH8lCr8ODSZKts/ONRxpazrCr2UAv2g="
+}
