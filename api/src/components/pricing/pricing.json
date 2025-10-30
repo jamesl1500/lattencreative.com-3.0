@@ -1,0 +1,51 @@
+{
+  "collectionName": "components_pricing_pricings",
+  "info": {
+    "displayName": "Pricing",
+    "icon": "dollar-sign",
+    "description": "Pricing options for services"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "price": {
+      "type": "decimal"
+    },
+    "currency": {
+      "type": "string",
+      "default": "USD"
+    },
+    "period": {
+      "type": "enumeration",
+      "enum": [
+        "one-time",
+        "hourly",
+        "daily",
+        "weekly",
+        "monthly",
+        "yearly"
+      ],
+      "default": "one-time"
+    },
+    "description": {
+      "type": "text"
+    },
+    "features": {
+      "type": "text"
+    },
+    "isPopular": {
+      "type": "boolean",
+      "default": false
+    },
+    "ctaText": {
+      "type": "string",
+      "default": "Get Started"
+    },
+    "ctaUrl": {
+      "type": "string"
+    }
+  }
+}

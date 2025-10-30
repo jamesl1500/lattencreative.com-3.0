@@ -4,6 +4,27 @@
  * 
  * @module libs/site
  */
+import { fetchFromStrapi } from "@/libs/api";
+
+/**
+ * Import site data from strapi
+ * 
+ * @returns Site Data
+ */
+const fetchSiteData = async (key: string) => {
+    try {
+        const response = await fetchFromStrapi('/site-detail?populate=*');
+
+        if(response && response.data) {
+            return response.data[key];
+        }
+
+        return "false";
+    } catch(error) {
+        console.error("Error fetching site data:", error);
+        return "false";
+    }
+}
 
 /**
  * siteName
@@ -11,11 +32,14 @@
  * 
  * @returns Site Name
  */
-const siteName = () => {
-    // TODO: #1 Fetch from a CMS or config file @jamesl1500
-
-    // Return static site name for now
-    return "Latten Creative";
+const siteName = async () => {
+    try {
+        const name = await fetchSiteData('siteName');
+        return name !== "false" ? name : "Latten Creative";
+    } catch (error) {
+        console.error("Error fetching site name:", error);
+        return "Latten Creative"; // Fallback
+    }
 };
 
 /**
@@ -24,11 +48,14 @@ const siteName = () => {
  * 
  * @returns Site Tagline
  */
-const siteTagline = () => {
-    // TODO: Fetch from a CMS or config file
-
-    // Return static tagline for now
-    return "Creative Solutions for Modern Businesses";
+const siteTagline = async () => {
+    try {
+        const tagline = await fetchSiteData('siteTagline');
+        return tagline !== "false" ? tagline : "Creative Solutions for Modern Businesses";
+    } catch (error) {
+        console.error("Error fetching site tagline:", error);
+        return "Creative Solutions for Modern Businesses"; // Fallback
+    }
 };
 
 /**
@@ -37,8 +64,14 @@ const siteTagline = () => {
  * 
  * @returns Site Author
  */
-const siteAuthor = () => {
-    return "Latten Creative";
+const siteAuthor = async () => {
+    try {
+        const author = await fetchSiteData('siteAuthor');
+        return author !== "false" ? author : "Latten Creative";
+    } catch (error) {
+        console.error("Error fetching site author:", error);
+        return "Latten Creative"; // Fallback
+    }
 };
 
 /**
@@ -47,8 +80,14 @@ const siteAuthor = () => {
  * 
  * @returns Site Description
  */
-const siteDescription = () => {
-    return "Latten Creative is a full-service digital agency specializing in web design, development, and digital marketing to help businesses thrive online.";
+const siteDescription = async () => {
+    try {
+        const description = await fetchSiteData('siteDescription');
+        return description !== "false" ? description : "Latten Creative is a full-service digital agency specializing in web design, development, and digital marketing to help businesses thrive online.";
+    } catch (error) {
+        console.error("Error fetching site description:", error);
+        return "Latten Creative is a full-service digital agency specializing in web design, development, and digital marketing to help businesses thrive online."; // Fallback
+    }
 };
 
 /**
@@ -57,8 +96,14 @@ const siteDescription = () => {
  * 
  * @returns Site Keywords
  */
-const siteKeywords = () => {
-    return "web design, web development, digital marketing, SEO, branding, Latten Creative";
+const siteKeywords = async () => {
+    try {
+        const keywords = await fetchSiteData('siteKeywords');
+        return keywords !== "false" ? keywords : "web design, web development, digital marketing, SEO, branding, Latten Creative";
+    } catch (error) {
+        console.error("Error fetching site keywords:", error);
+        return "web design, web development, digital marketing, SEO, branding, Latten Creative"; // Fallback
+    }
 };
 
 /**
@@ -67,8 +112,14 @@ const siteKeywords = () => {
  * 
  * @returns Site URL
  */
-const siteUrl = () => {
-    return "https://www.lattencreative.com";
+const siteUrl = async () => {
+    try {
+        const url = await fetchSiteData('siteUrl');
+        return url !== "false" ? url : "https://www.lattencreative.com";
+    } catch (error) {
+        console.error("Error fetching site URL:", error);
+        return "https://www.lattencreative.com"; // Fallback
+    }
 };
 
 /**
@@ -77,8 +128,14 @@ const siteUrl = () => {
  * 
  * @returns Site Locale
  */
-const siteLocale = () => {
-    return "en_US";
+const siteLocale = async () => {
+    try {
+        const locale = await fetchSiteData('siteLocale');
+        return locale !== "false" ? locale : "en_US";
+    } catch (error) {
+        console.error("Error fetching site locale:", error);
+        return "en_US"; // Fallback
+    }
 };
 
 /**
@@ -87,8 +144,19 @@ const siteLocale = () => {
  * 
  * @returns Site Favicon URL
  */
-const siteFavicon = () => {
-    return "/favicon.ico";
+const siteFavicon = async () => {
+    try {
+        const favicon = await fetchSiteData('siteFavicon');
+        if (favicon !== "false") {
+            const fav = process.env.NEXT_PUBLIC_STRAPI_API_URL + favicon.url;
+            return fav;
+        }
+
+        return "/favicon.ico";
+    } catch (error) {
+        console.error("Error fetching site favicon:", error);
+        return "/favicon.ico"; // Fallback
+    }
 }
 
 export { siteName, siteTagline, siteAuthor, siteDescription, siteKeywords, siteUrl, siteLocale, siteFavicon };

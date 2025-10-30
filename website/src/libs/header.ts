@@ -4,6 +4,7 @@
  * 
  * @module libs/navigation
  */
+import * as site from "@/libs/site";
 
 // Types
 const navItems = [];
@@ -60,17 +61,4 @@ const getSiteLogo = () => {
     };
 }
 
-/**
- * getSiteName
- * Get the site name.
- * 
- * @returns Site name as a string
- */
-const getSiteName = () => {
-    // TODO: Fetch from a CMS or config file
-
-    // Return static site name for now
-    return "Latten Creative";
-}
-
-export { getNavItems, getCTAItems, getSiteLogo, getSiteName };
+export { getNavItems, getCTAItems, getSiteLogo };

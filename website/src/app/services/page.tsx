@@ -4,15 +4,15 @@ import Link from "next/link";
 import { generatePageMetadata } from "../../libs/metadata";
 import { getServicesData } from "../../libs/data/services";
 
-export const metadata: Metadata = generatePageMetadata({
+export const metadata: Promise<Metadata> = generatePageMetadata({
   title: "Our Services",
   description: "Explore our comprehensive range of digital services designed to help your business grow. From web design to digital marketing, we have the expertise to transform your online presence.",
   keywords: ["services", "web design", "web development", "digital marketing", "SEO", "e-commerce"],
   canonicalPath: "/services",
 });
 
-export default function Services() {
-  const services = getServicesData();
+export default async function Services() {
+  const services = await getServicesData();
 
   // Group services by category
   const servicesByCategory = services.reduce((acc, service) => {
@@ -77,7 +77,7 @@ export default function Services() {
                   <div key={service.id} className="service-card">
                     <div className="service-card-image">
                       <Image
-                        src={service.icon}
+                        src={`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'}${service.image.url}`}
                         alt={service.name}
                         fill
                         style={{ objectFit: "cover" }}
@@ -91,10 +91,10 @@ export default function Services() {
                       <h3>{service.name}</h3>
                       <p>{service.description}</p>
                       <div className="service-card-actions">
-                        <Link href={service.url} className="btn btn-primary">
+                        <Link href={`/services/${service.slug}`} className="btn btn-primary">
                           Learn More
                         </Link>
-                        <Link href="/contact-us" className="btn btn-secondary">
+                        <Link href={`/contact-us?service=${service.slug}`} className="btn btn-secondary">
                           Get Quote
                         </Link>
                       </div>
@@ -121,7 +121,7 @@ export default function Services() {
                         <div key={service.id} className="category-service-item">
                           <div className="category-service-image">
                             <Image
-                              src={service.icon}
+                              src={`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'}${service.image.url}`}
                               alt={service.name}
                               width={80}
                               height={80}
@@ -131,7 +131,7 @@ export default function Services() {
                           <div className="category-service-content">
                             <h4>{service.name}</h4>
                             <p>{service.description}</p>
-                            <Link href={service.url} className="category-service-link">
+                            <Link href={`/services/${service.slug}`} className="category-service-link">
                               Explore Service →
                             </Link>
                           </div>
@@ -140,46 +140,6 @@ export default function Services() {
                     </div>
                   </div>
                 ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Process Section */}
-          <div className="page-section page-section-process">
-            <div className="page-section-inner container">
-              <div className="page-section-title text-center">
-                <h2>Our Process</h2>
-                <p>How we deliver exceptional results for every project</p>
-              </div>
-              <div className="process-timeline">
-                <div className="process-step">
-                  <div className="process-step-number">01</div>
-                  <div className="process-step-content">
-                    <h3>Discovery & Strategy</h3>
-                    <p>We start by understanding your business goals, target audience, and project requirements through detailed consultations.</p>
-                  </div>
-                </div>
-                <div className="process-step">
-                  <div className="process-step-number">02</div>
-                  <div className="process-step-content">
-                    <h3>Design & Planning</h3>
-                    <p>Our team creates comprehensive designs and project plans that align with your vision and business objectives.</p>
-                  </div>
-                </div>
-                <div className="process-step">
-                  <div className="process-step-number">03</div>
-                  <div className="process-step-content">
-                    <h3>Development & Implementation</h3>
-                    <p>We bring your project to life using cutting-edge technologies and best practices for optimal performance.</p>
-                  </div>
-                </div>
-                <div className="process-step">
-                  <div className="process-step-number">04</div>
-                  <div className="process-step-content">
-                    <h3>Launch & Optimization</h3>
-                    <p>We handle the launch process and provide ongoing optimization to ensure continued success and growth.</p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

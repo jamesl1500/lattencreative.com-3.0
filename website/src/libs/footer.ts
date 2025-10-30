@@ -5,6 +5,8 @@
  * @module libs/footer
  */
 
+import { getServicesData } from "./data/services";
+
 // Types
 interface FooterLink {
     id: number;
@@ -24,6 +26,7 @@ interface SocialMediaLink {
     name: string;
     url: string;
     icon: string; // CSS class or icon identifier
+    external?: boolean;
 }
 
 interface ContactInfo {
@@ -38,20 +41,11 @@ interface ContactInfo {
  * 
  * @returns Array of footer sections with links
  */
-const getFooterSections = (): FooterSection[] => {
+const getFooterSections = async (): Promise<FooterSection[]> => {
+    // Fetch services
+    const services = await getServicesData();
+    
     return [
-        {
-            id: 1,
-            title: "Services",
-            links: [
-                { id: 1, name: "Web Design", url: "/services/web-design" },
-                { id: 2, name: "Web Development", url: "/services/web-development" },
-                { id: 3, name: "SEO Optimization", url: "/services/seo-optimization" },
-                { id: 4, name: "Digital Marketing", url: "/services/digital-marketing" },
-                { id: 5, name: "E-Commerce Solutions", url: "/services/ecommerce-solutions" },
-                { id: 6, name: "Content Creation", url: "/services/content-creation" }
-            ]
-        },
         {
             id: 2,
             title: "Company",
@@ -60,7 +54,6 @@ const getFooterSections = (): FooterSection[] => {
                 { id: 8, name: "Our Team", url: "/about#team" },
                 { id: 9, name: "Case Studies", url: "/case-studies" },
                 { id: 10, name: "Blog", url: "/blog" },
-                { id: 11, name: "Careers", url: "/careers" }
             ]
         },
         {
@@ -68,10 +61,6 @@ const getFooterSections = (): FooterSection[] => {
             title: "Support",
             links: [
                 { id: 12, name: "Contact Us", url: "/contact-us" },
-                { id: 13, name: "FAQ", url: "/faq" },
-                { id: 14, name: "Help Center", url: "/help" },
-                { id: 15, name: "Documentation", url: "/docs" },
-                { id: 16, name: "Community", url: "/community" }
             ]
         },
         {
@@ -80,8 +69,6 @@ const getFooterSections = (): FooterSection[] => {
             links: [
                 { id: 17, name: "Privacy Policy", url: "/privacy-policy" },
                 { id: 18, name: "Terms of Service", url: "/terms" },
-                { id: 19, name: "Cookie Policy", url: "/cookies" },
-                { id: 20, name: "GDPR Compliance", url: "/gdpr" }
             ]
         }
     ];
@@ -98,25 +85,20 @@ const getSocialMediaLinks = (): SocialMediaLink[] => {
         {
             id: 1,
             name: "Facebook",
-            url: "https://facebook.com/lattencreative",
-            icon: "facebook"
+            url: "https://www.facebook.com/profile.php?id=100094320792860",
+            icon: "facebook",
+            external: true
         },
         {
             id: 2,
             name: "Twitter",
-            url: "https://twitter.com/lattencreative",
+            url: "https://x.com/latten_creative",
             icon: "twitter"
-        },
-        {
-            id: 3,
-            name: "Instagram",
-            url: "https://instagram.com/lattencreative",
-            icon: "instagram"
         },
         {
             id: 4,
             name: "LinkedIn",
-            url: "https://linkedin.com/company/lattencreative",
+            url: "https://www.linkedin.com/company/latten-creative-llc/",
             icon: "linkedin"
         },
         {
@@ -127,9 +109,9 @@ const getSocialMediaLinks = (): SocialMediaLink[] => {
         },
         {
             id: 6,
-            name: "Dribbble",
-            url: "https://dribbble.com/lattencreative",
-            icon: "dribbble"
+            name: "Github",
+            url: "https://github.com/Latten-Creative-LLC",
+            icon: "github"
         }
     ];
 };
@@ -143,8 +125,8 @@ const getSocialMediaLinks = (): SocialMediaLink[] => {
 const getContactInfo = (): ContactInfo => {
     return {
         email: "hello@lattencreative.com",
-        phone: "+1 (555) 123-4567",
-        address: "123 Creative Street, Design City, DC 12345"
+        phone: "+1 (440) 687-5983",
+        address: "Lorain, Ohio 44053"
     };
 };
 

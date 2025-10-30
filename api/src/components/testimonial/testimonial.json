@@ -1,0 +1,44 @@
+{
+  "collectionName": "components_testimonial_testimonials",
+  "info": {
+    "displayName": "Testimonial",
+    "icon": "quote-right",
+    "description": "Customer testimonials for services"
+  },
+  "options": {},
+  "attributes": {
+    "quote": {
+      "type": "text",
+      "required": true
+    },
+    "clientName": {
+      "type": "string",
+      "required": true
+    },
+    "clientTitle": {
+      "type": "string"
+    },
+    "company": {
+      "type": "string"
+    },
+    "avatar": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "rating": {
+      "type": "integer",
+      "min": 1,
+      "max": 5
+    },
+    "projectType": {
+      "type": "string"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

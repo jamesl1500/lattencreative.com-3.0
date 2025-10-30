@@ -1,19 +1,19 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { generatePageMetadata } from "../libs/metadata";
-import { siteTagline } from "../libs/site";
 import { getServicesData } from "../libs/data/services";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Home",
-  description: `${siteTagline()} - Discover our comprehensive digital solutions designed to elevate your business presence online.`,
+  description: "Discover our comprehensive digital solutions designed to elevate your business presence online.",
   keywords: ["homepage", "digital agency", "creative solutions"],
   canonicalPath: "/",
 });
 
-export default function Home() {
-  // TODO: Fetch services data 
-  const services = getServicesData();
+export default async function Home() {
+  // TODO: Fetch services data
+  const services = await getServicesData();
 
   return (
     <div className="page page-home">
@@ -49,15 +49,19 @@ export default function Home() {
                     <div key={service.id} className="service-card">
                       <div className="service-card-image">
                         <Image                      
-                          src={service.icon}
+                          src={`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'}${service.image.url}`}
                           alt={service.name}
                           fill
                           style={{ objectFit: "cover" }}
                         />
                       </div>
                       <div className="service-card-content">
-                        <h3>{service.name}</h3>
-                        <p>{service.description}</p>
+                        <h3>
+                          <Link href={`services/${service.slug}`} className="service-link">
+                            {service.name}
+                          </Link>
+                        </h3>
+                        <p>{service.tagline}</p>
                       </div>
                     </div>
                   ))

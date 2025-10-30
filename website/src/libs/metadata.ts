@@ -13,7 +13,8 @@ import {
   siteDescription, 
   siteKeywords, 
   siteUrl, 
-  siteLocale 
+  siteLocale,
+  siteFavicon
 } from "./site";
 
 interface PageMetadataOptions {
@@ -32,10 +33,10 @@ interface PageMetadataOptions {
  * @param options - Page-specific metadata options
  * @returns Metadata object for the page
  */
-export function generatePageMetadata(options: PageMetadataOptions = {}): Metadata {
+export async function generatePageMetadata(options: PageMetadataOptions = {}): Promise<Metadata> {
   const {
     title,
-    description = siteDescription(),
+    description = await siteDescription(),
     keywords = [],
     canonicalPath = "/",
     ogImage,
@@ -44,39 +45,40 @@ export function generatePageMetadata(options: PageMetadataOptions = {}): Metadat
 
   // Combine site keywords with page-specific keywords
   const allKeywords = [
-    ...siteKeywords().split(", "),
+    //...(await siteKeywords()).split(", "),
     ...keywords,
   ].join(", ");
 
   // Generate full title
-  const fullTitle = title ? `${title} | ${siteName()}` : siteName();
+  const fullTitle = title ? `${title} | ${await siteName()}` : await siteName();
   
   // Generate canonical URL
-  const canonicalUrl = new URL(canonicalPath, siteUrl()).toString();
+  const canonicalUrl = new URL(canonicalPath, await siteUrl()).toString();
 
   const metadata: Metadata = {
     title: fullTitle,
-    description,
+    description: description,
     keywords: allKeywords,
-    authors: [{ name: siteAuthor() }],
-    creator: siteAuthor(),
-    publisher: siteAuthor(),
+    applicationName: await siteName(),
+    authors: [{ name: await siteAuthor() }],
+    creator: await siteAuthor(),
+    publisher: await siteAuthor(),
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
       type: "website",
-      locale: siteLocale(),
+      locale: await siteLocale(),
       url: canonicalUrl,
       title: fullTitle,
       description,
-      siteName: siteName(),
+      siteName: await siteName(),
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
-      creator: `@${siteAuthor()}`,
+      creator: `@${await siteAuthor()}`,
     },
   };
 

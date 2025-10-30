@@ -5,7 +5,8 @@ import Link from "next/link";
 
 import React, { useEffect, useState } from "react";
 
-import {getCTAItems, getNavItems, getSiteLogo, getSiteName} from "@/libs/header";
+import {getCTAItems, getNavItems, getSiteLogo} from "@/libs/header";
+import { useSiteData } from "@/hooks/useSiteData";
 
 const Header = () => {
     // State for scroll detection
@@ -29,8 +30,8 @@ const Header = () => {
 
     // TODO: Integrate dynamic data fetching
 
-    // Get site name
-    const siteName = getSiteName();
+    // Get site data using hook
+    const { siteName, loading } = useSiteData();
     
     // Get site logo
     const siteLogo = getSiteLogo();
@@ -47,7 +48,7 @@ const Header = () => {
                 <div className="header-branding">
                     <Link href="/" className="header-logo">
                         <Image src={siteLogo.src} alt={siteLogo.alt} width={siteLogo.width} height={siteLogo.height} />
-                        <span>{siteName}</span>
+                        <span>{loading ? 'Loading...' : siteName}</span>
                     </Link>
                 </div>
                 <div className="header-nav">

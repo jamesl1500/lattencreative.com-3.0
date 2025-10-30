@@ -14,17 +14,49 @@
     "name": {
       "type": "string"
     },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "tagline": {
+      "type": "string"
+    },
     "description": {
       "type": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     },
     "icon": {
       "type": "string"
     },
-    "url": {
-      "type": "string"
-    },
     "category": {
       "type": "string"
+    },
+    "pricing": {
+      "type": "component",
+      "component": "pricing.pricing",
+      "repeatable": true
+    },
+    "processSteps": {
+      "type": "component",
+      "component": "process.process-step",
+      "repeatable": true
+    },
+    "testimonials": {
+      "type": "component",
+      "component": "testimonial.testimonial",
+      "repeatable": true
+    },
+    "features": {
+      "type": "text"
     }
   }
 }

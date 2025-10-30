@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_process_steps",
+  "info": {
+    "displayName": "Process Step",
+    "icon": "list",
+    "description": "Steps in the service process"
+  },
+  "options": {},
+  "attributes": {
+    "stepNumber": {
+      "type": "integer",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "icon": {
+      "type": "string"
+    },
+    "estimatedDuration": {
+      "type": "string"
+    },
+    "deliverables": {
+      "type": "json"
+    }
+  }
+}
