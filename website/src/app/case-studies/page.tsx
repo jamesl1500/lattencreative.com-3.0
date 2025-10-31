@@ -2,12 +2,16 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { generatePageMetadata } from "../../libs/metadata";
-import { getCaseStudiesData, getCategories } from "../../libs/data/case_studies";
+import {
+  getCaseStudiesData,
+  getCategories,
+} from "../../libs/data/case_studies";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Case Studies",
-  description: "Explore our portfolio of successful projects and discover how we've helped businesses transform their digital presence and achieve remarkable results.",
-  canonicalPath: "/case-studies"
+  description:
+    "Explore our portfolio of successful projects and discover how we've helped businesses transform their digital presence and achieve remarkable results.",
+  canonicalPath: "/case-studies",
 });
 
 export default function CaseStudiesPage() {
@@ -22,8 +26,9 @@ export default function CaseStudiesPage() {
           <div className="case-studies-hero-inner">
             <h1>Case Studies</h1>
             <p className="hero-subtitle">
-              Explore our portfolio of successful projects and discover how we've helped businesses 
-              transform their digital presence and achieve remarkable results.
+              Explore our portfolio of successful projects and discover how
+              we've helped businesses transform their digital presence and
+              achieve remarkable results.
             </p>
           </div>
         </section>
@@ -37,9 +42,9 @@ export default function CaseStudiesPage() {
                 All Projects
               </Link>
               {categories.map((category) => (
-                <Link 
-                  key={category} 
-                  href={`/case-studies?category=${category.toLowerCase()}`} 
+                <Link
+                  key={category}
+                  href={`/case-studies?category=${category.toLowerCase()}`}
                   className="category-filter"
                 >
                   {category}
@@ -64,36 +69,43 @@ export default function CaseStudiesPage() {
                       className="case-study-img"
                     />
                     <div className="case-study-overlay">
-                      <span className="case-study-category">{study.category}</span>
+                      <span className="case-study-category">
+                        {study.category}
+                      </span>
                     </div>
                   </div>
                   <div className="case-study-content">
                     <div className="case-study-meta">
                       <span className="case-study-client">{study.client}</span>
-                      <span className="case-study-duration">{study.duration}</span>
+                      <span className="case-study-duration">
+                        {study.duration}
+                      </span>
                     </div>
                     <h3 className="case-study-title">{study.title}</h3>
-                    <p className="case-study-description">{study.shortDescription}</p>
+                    <p className="case-study-description">
+                      {study.shortDescription}
+                    </p>
                     <div className="case-study-metrics">
-                      {study.metrics && study.metrics.slice(0, 2).map((metric, index) => (
-                        <div key={index} className="metric-item">
-                          <span className="metric-value">{metric.value}</span>
-                          <span className="metric-label">{metric.label}</span>
-                        </div>
-                      ))}
+                      {study.metrics &&
+                        study.metrics.slice(0, 2).map((metric, index) => (
+                          <div key={index} className="metric-item">
+                            <span className="metric-value">{metric.value}</span>
+                            <span className="metric-label">{metric.label}</span>
+                          </div>
+                        ))}
                     </div>
                     <div className="case-study-actions">
-                      <Link 
-                        href={`/case-studies/${study.id}`} 
+                      <Link
+                        href={`/case-studies/${study.id}`}
                         className="btn btn-primary"
                       >
                         View Case Study
                       </Link>
                       {study.url && (
-                        <a 
-                          href={study.url} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
+                        <a
+                          href={study.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="btn btn-secondary"
                         >
                           Visit Site
@@ -187,8 +199,9 @@ export default function CaseStudiesPage() {
             <div className="cta-content">
               <h2>Ready to Create Your Success Story?</h2>
               <p>
-                Let's discuss how we can help transform your business and achieve 
-                remarkable results like the clients featured in our case studies.
+                Let's discuss how we can help transform your business and
+                achieve remarkable results like the clients featured in our case
+                studies.
               </p>
               <div className="cta-actions">
                 <Link href="/contact-us" className="btn btn-primary">

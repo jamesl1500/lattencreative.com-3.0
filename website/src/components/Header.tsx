@@ -5,79 +5,88 @@ import Link from "next/link";
 
 import React, { useEffect, useState } from "react";
 
-import {getCTAItems, getNavItems, getSiteLogo} from "@/libs/header";
+import { getCTAItems, getNavItems, getSiteLogo } from "@/libs/header";
 import { useSiteData } from "@/hooks/useSiteData";
 
 const Header = () => {
-    // State for scroll detection
-    const [isScrolled, setIsScrolled] = useState(false);
+  // State for scroll detection
+  const [isScrolled, setIsScrolled] = useState(false);
 
-    // Effect to handle scroll events
-    useEffect(() => {
-        const handleScroll = () => {
-            const scrollTop = window.scrollY;
-            setIsScrolled(scrollTop > 50); // Add blur after scrolling 50px
-        };
+  // Effect to handle scroll events
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 50); // Add blur after scrolling 50px
+    };
 
-        // Add scroll event listener
-        window.addEventListener('scroll', handleScroll);
+    // Add scroll event listener
+    window.addEventListener("scroll", handleScroll);
 
-        // Cleanup event listener on component unmount
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
-    // TODO: Integrate dynamic data fetching
+  // TODO: Integrate dynamic data fetching
 
-    // Get site data using hook
-    const { siteName, loading } = useSiteData();
-    
-    // Get site logo
-    const siteLogo = getSiteLogo();
+  // Get site data using hook
+  const { siteName, loading } = useSiteData();
 
-    // Get navigation items
-    const navItems = getNavItems();
+  // Get site logo
+  const siteLogo = getSiteLogo();
 
-    // Get CTA items
-    const ctaItems = getCTAItems();
+  // Get navigation items
+  const navItems = getNavItems();
 
-    return (
-        <header className={`header ${isScrolled ? 'header-scrolled' : ''}`}>
-            <div className="header-inner container">
-                <div className="header-branding">
-                    <Link href="/" className="header-logo">
-                        <Image src={siteLogo.src} alt={siteLogo.alt} width={siteLogo.width} height={siteLogo.height} />
-                        <span>{loading ? 'Loading...' : siteName}</span>
+  // Get CTA items
+  const ctaItems = getCTAItems();
+
+  return (
+    <header className={`header ${isScrolled ? "header-scrolled" : ""}`}>
+      <div className="header-inner container">
+        <div className="header-branding">
+          <Link href="/" className="header-logo">
+            <Image
+              src={siteLogo.src}
+              alt={siteLogo.alt}
+              width={siteLogo.width}
+              height={siteLogo.height}
+            />
+            <span>{loading ? "Loading..." : siteName}</span>
+          </Link>
+        </div>
+        <div className="header-nav">
+          <nav className="header-nav-parent">
+            <ul className="header-nav-list">
+              {navItems.map((item) => (
+                <li key={item.path} className="header-nav-item">
+                  <Link href={item.path} className="header-nav-link">
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+        <div className="header-ctas">
+          <div className="header-ctas-inner">
+            <nav className="header-cta-nav">
+              <ul className="header-cta-list">
+                {ctaItems.map((item) => (
+                  <li key={item.path} className="header-cta-item">
+                    <Link href={item.path} className="header-cta-link">
+                      {item.name}
                     </Link>
-                </div>
-                <div className="header-nav">
-                    <nav className="header-nav-parent">
-                        <ul className="header-nav-list">
-                            {navItems.map(item => (
-                                <li key={item.path} className="header-nav-item">
-                                    <Link href={item.path} className="header-nav-link">{item.name}</Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </nav>
-                </div>
-                <div className="header-ctas">
-                    <div className="header-ctas-inner">
-                        <nav className="header-cta-nav">
-                            <ul className="header-cta-list">
-                                {ctaItems.map(item => (
-                                    <li key={item.path} className="header-cta-item">
-                                        <Link href={item.path} className="header-cta-link">{item.name}</Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </header>
-    );
-}
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+};
 
 export default Header;

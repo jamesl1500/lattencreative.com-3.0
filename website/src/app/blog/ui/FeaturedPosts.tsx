@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import { use } from "react";
@@ -11,7 +11,7 @@ interface FeaturedPostsProps {
 
 export default function FeaturedPosts({ postsPromise }: FeaturedPostsProps) {
   const posts = use(postsPromise);
-  const featuredPosts = posts.filter(post => post.featured);
+  const featuredPosts = posts.filter((post) => post.featured);
 
   if (featuredPosts.length === 0) {
     return null;
@@ -23,7 +23,7 @@ export default function FeaturedPosts({ postsPromise }: FeaturedPostsProps) {
         <h2>Featured Articles</h2>
         <div className="featured-posts-grid">
           {featuredPosts.map((post) => (
-            <Post key={ post.id } post={ post } />
+            <Post key={post.id} post={post} />
           ))}
         </div>
       </div>

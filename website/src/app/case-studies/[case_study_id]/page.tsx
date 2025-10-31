@@ -10,22 +10,24 @@ interface CaseStudyPageProps {
   };
 }
 
-export async function generateMetadata({ params }: CaseStudyPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: CaseStudyPageProps): Promise<Metadata> {
   const caseStudyId = parseInt(params.case_study_id);
   const caseStudy = getCaseStudyById(caseStudyId);
-  
+
   if (!caseStudy) {
     return generatePageMetadata({
       title: "Case Study Not Found",
       description: "The requested case study could not be found.",
-      canonicalPath: `/case-studies/${params.case_study_id}`
+      canonicalPath: `/case-studies/${params.case_study_id}`,
     });
   }
 
   return generatePageMetadata({
     title: `${caseStudy.title} - ${caseStudy.client}`,
     description: caseStudy.shortDescription,
-    canonicalPath: `/case-studies/${params.case_study_id}`
+    canonicalPath: `/case-studies/${params.case_study_id}`,
   });
 }
 
@@ -62,18 +64,24 @@ export default function CaseStudyDetailPage({ params }: CaseStudyPageProps) {
                 <span>{caseStudy.title}</span>
               </div>
               <div className="case-study-meta">
-                <span className="case-study-category">{caseStudy.category}</span>
-                <span className="case-study-duration">{caseStudy.duration}</span>
+                <span className="case-study-category">
+                  {caseStudy.category}
+                </span>
+                <span className="case-study-duration">
+                  {caseStudy.duration}
+                </span>
               </div>
               <h1 className="case-study-title">{caseStudy.title}</h1>
               <p className="case-study-client">for {caseStudy.client}</p>
-              <p className="case-study-description">{caseStudy.shortDescription}</p>
+              <p className="case-study-description">
+                {caseStudy.shortDescription}
+              </p>
               <div className="case-study-hero-actions">
                 {caseStudy.url && (
-                  <a 
-                    href={caseStudy.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
+                  <a
+                    href={caseStudy.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="btn btn-primary"
                   >
                     Visit Live Site
@@ -103,7 +111,7 @@ export default function CaseStudyDetailPage({ params }: CaseStudyPageProps) {
               <div className="overview-details">
                 <h2>Project Overview</h2>
                 <p>{caseStudy.fullDescription}</p>
-                
+
                 <div className="project-info">
                   <div className="info-item">
                     <h4>Client</h4>
@@ -121,13 +129,15 @@ export default function CaseStudyDetailPage({ params }: CaseStudyPageProps) {
                     <h4>Technologies</h4>
                     <div className="tech-tags">
                       {caseStudy.technologies.map((tech, index) => (
-                        <span key={index} className="tech-tag">{tech}</span>
+                        <span key={index} className="tech-tag">
+                          {tech}
+                        </span>
                       ))}
                     </div>
                   </div>
                 </div>
               </div>
-              
+
               {caseStudy.metrics && (
                 <div className="overview-metrics">
                   <h3>Key Results</h3>
@@ -136,7 +146,9 @@ export default function CaseStudyDetailPage({ params }: CaseStudyPageProps) {
                       <div key={index} className="metric-card">
                         <div className="metric-value">{metric.value}</div>
                         <div className="metric-label">{metric.label}</div>
-                        <div className="metric-description">{metric.description}</div>
+                        <div className="metric-description">
+                          {metric.description}
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -207,7 +219,10 @@ export default function CaseStudyDetailPage({ params }: CaseStudyPageProps) {
                 </div>
                 <div className="testimonial-author">
                   <h4>{caseStudy.testimonial.author}</h4>
-                  <p>{caseStudy.testimonial.position}, {caseStudy.testimonial.company}</p>
+                  <p>
+                    {caseStudy.testimonial.position},{" "}
+                    {caseStudy.testimonial.company}
+                  </p>
                 </div>
               </div>
             </div>
@@ -232,8 +247,8 @@ export default function CaseStudyDetailPage({ params }: CaseStudyPageProps) {
             <div className="cta-content">
               <h2>Ready to Start Your Project?</h2>
               <p>
-                Let's discuss how we can help you achieve similar results and transform 
-                your business with a custom solution.
+                Let's discuss how we can help you achieve similar results and
+                transform your business with a custom solution.
               </p>
               <div className="cta-actions">
                 <Link href="/contact-us" className="btn btn-primary">

@@ -18,15 +18,17 @@ async function getServiceData(serviceId: string) {
   return service;
 }
 
-export async function generateMetadata({ params }: ServicePageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: ServicePageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const service = await getServiceData(resolvedParams.service_id);
-  
+
   if (!service) {
     return generateServiceMetadata(
-      'Service Not Found',
-      'The requested service could not be found.',
-      resolvedParams.service_id
+      "Service Not Found",
+      "The requested service could not be found.",
+      resolvedParams.service_id,
     );
   }
   return generateServiceMetadata(
@@ -64,15 +66,13 @@ export default async function ServicePage({ params }: ServicePageProps) {
           <div className="service-hero-inner">
             <div className="service-hero-image">
               <Image
-                src={`${process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'}${service.image.url}`}
+                src={`${process.env.NEXT_PUBLIC_STRAPI_URL || "http://127.0.0.1:1337"}${service.image.url}`}
                 alt={service.name}
                 width={600}
                 height={400}
                 className="service-hero-img"
               />
-              <div className="service-category-badge">
-                {service.category}
-              </div>
+              <div className="service-category-badge">{service.category}</div>
             </div>
             <div className="service-hero-content">
               <h1 className="service-title">{service.name}</h1>
@@ -103,18 +103,20 @@ export default async function ServicePage({ params }: ServicePageProps) {
             <div className="service-section-inner">
               <h2>What's Included</h2>
               <div className="features-grid">
-                {service.features.split(',\n').map((feature: string, index: number) => {
-                  const [title, description] = feature.split(' - ');
-                  return (
-                    <div key={index} className="feature-item">
-                      <div className="feature-icon">✓</div>
-                      <div className="feature-content">
-                        <h3>{title.slice(1)}</h3>
-                        {description && <p>{description.slice(0, -1)}</p>}
+                {service.features
+                  .split(",\n")
+                  .map((feature: string, index: number) => {
+                    const [title, description] = feature.split(" - ");
+                    return (
+                      <div key={index} className="feature-item">
+                        <div className="feature-icon">✓</div>
+                        <div className="feature-content">
+                          <h3>{title.slice(1)}</h3>
+                          {description && <p>{description.slice(0, -1)}</p>}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
             </div>
           </section>
@@ -147,25 +149,37 @@ export default async function ServicePage({ params }: ServicePageProps) {
             <div className="service-section-inner">
               <h2>Pricing Plans</h2>
               <div className="pricing-grid">
-                  {service.pricing.map((plan: any, index: number) => (
-                    <div key={index} className={`pricing-card ${plan.isPopular ? 'pricing-card-featured' : ''}`}>
-                      <div className="pricing-header">
-                        <h3>{plan.title}</h3>
-                        <div className="pricing-price">{plan.price != null ? `$${plan.price}` : "Contact Us"}</div>
-                        <div className="pricing-period">{plan.price != null ? `/ ${plan.period}` : ""}</div>
+                {service.pricing.map((plan: any, index: number) => (
+                  <div
+                    key={index}
+                    className={`pricing-card ${plan.isPopular ? "pricing-card-featured" : ""}`}
+                  >
+                    <div className="pricing-header">
+                      <h3>{plan.title}</h3>
+                      <div className="pricing-price">
+                        {plan.price != null ? `$${plan.price}` : "Contact Us"}
                       </div>
-                      <div className="pricing-description">
-                        <p>{plan.description}</p>
+                      <div className="pricing-period">
+                        {plan.price != null ? `/ ${plan.period}` : ""}
                       </div>
-                      <ul className="pricing-features">
-                        {plan.features.split(',').map((feature: string, featureIndex: number) => (
+                    </div>
+                    <div className="pricing-description">
+                      <p>{plan.description}</p>
+                    </div>
+                    <ul className="pricing-features">
+                      {plan.features
+                        .split(",")
+                        .map((feature: string, featureIndex: number) => (
                           <li key={featureIndex}>{feature}</li>
                         ))}
-                      </ul>
-                      <Link href={`/contact-us?plan=${plan.title}&service=${service.slug}`} className="btn btn-secondary pricing-btn">
-                        {plan.ctaText}
-                      </Link>
-                    </div>
+                    </ul>
+                    <Link
+                      href={`/contact-us?plan=${plan.title}&service=${service.slug}`}
+                      className="btn btn-secondary pricing-btn"
+                    >
+                      {plan.ctaText}
+                    </Link>
+                  </div>
                 ))}
               </div>
             </div>
@@ -184,7 +198,9 @@ export default async function ServicePage({ params }: ServicePageProps) {
                     </div>
                     <div className="testimonial-author">
                       <h4>{testimonial.clientName}</h4>
-                      <p>{testimonial.clientTitle}, {testimonial.company}</p>
+                      <p>
+                        {testimonial.clientTitle}, {testimonial.company}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -198,7 +214,10 @@ export default async function ServicePage({ params }: ServicePageProps) {
           <div className="service-section-inner">
             <div className="service-cta-content">
               <h2>Ready to Get Started?</h2>
-              <p>Let's discuss how our {service.name.toLowerCase()} services can help grow your business and achieve your goals.</p>
+              <p>
+                Let's discuss how our {service.name.toLowerCase()} services can
+                help grow your business and achieve your goals.
+              </p>
               <div className="service-cta-actions">
                 <Link href="/contact-us" className="btn btn-primary">
                   Start Your Project

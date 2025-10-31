@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getBlogPostBySlug, getRelatedPosts, type BlogPost } from "@/libs/data/blog";
+import {
+  getBlogPostBySlug,
+  getRelatedPosts,
+  type BlogPost,
+} from "@/libs/data/blog";
 import { generateBlogPostMetadata } from "@/libs/metadata";
 import SocialShareButtons from "@/components/SocialShareButtons";
 import NewsletterForm from "@/components/NewsletterForm";
@@ -12,14 +16,16 @@ interface BlogPostPageProps {
   };
 }
 
-export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: BlogPostPageProps): Promise<Metadata> {
   const post = await getBlogPostBySlug(params.blog_post_id);
-  
+
   if (!post) {
     return generateBlogPostMetadata(
-      'Blog Post Not Found',
-      'The requested blog post could not be found.',
-      params.blog_post_id
+      "Blog Post Not Found",
+      "The requested blog post could not be found.",
+      params.blog_post_id,
     );
   }
 
@@ -28,14 +34,16 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     post.description,
     params.blog_post_id,
     post.publishedDate,
-    Array.isArray(post.tags) ? post.tags : (post.tags as string).split(',').map(tag => tag.trim()),
-    typeof post.image === 'string' ? post.image : post.image?.url
+    Array.isArray(post.tags)
+      ? post.tags
+      : (post.tags as string).split(",").map((tag) => tag.trim()),
+    typeof post.image === "string" ? post.image : post.image?.url,
   );
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const post = await getBlogPostBySlug(params.blog_post_id);
-  
+
   if (!post) {
     return (
       <div className="page page-blog-post">
@@ -57,7 +65,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <div className="page page-blog-post">
       <div className="page-inner container-fluid">
-        
         {/* Blog Post Hero */}
         <div className="blog-post-hero">
           <div className="blog-post-hero-inner container">
@@ -66,17 +73,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <span>/</span>
               <span>{post.title}</span>
             </div>
-            
+
             <div className="post-category-pill">{post.category}</div>
-            
+
             <h1>{post.title}</h1>
             <p className="post-description">{post.description}</p>
-            
+
             <div className="post-meta">
               <div className="post-author">
                 {post.author.avatar && (
-                  <img 
-                    src={post.author.avatar} 
+                  <img
+                    src={post.author.avatar}
                     alt={post.author.name}
                     className="author-avatar"
                   />
@@ -86,23 +93,27 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   <span className="author-title">{post.author.title}</span>
                 </div>
               </div>
-              
+
               <div className="post-details">
                 <span className="post-date">
-                  {new Date(post.publishedDate).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
+                  {new Date(post.publishedDate).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
                   })}
                 </span>
                 <span className="post-read-time">{post.readTime} min read</span>
               </div>
             </div>
-            
+
             {post.image && (
               <div className="post-featured-image">
-                <img 
-                  src={typeof post.image === 'string' ? post.image : (process.env.NEXT_PUBLIC_STRAPI_URL + post.image.url)} 
+                <img
+                  src={
+                    typeof post.image === "string"
+                      ? post.image
+                      : process.env.NEXT_PUBLIC_STRAPI_URL + post.image.url
+                  }
                   alt={post.title}
                   className="image-fluid"
                 />
@@ -116,26 +127,31 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="blog-post-content-inner container">
             <div className="content-main">
               <article className="blog-article">
-                <div 
+                <div
                   className="article-content"
                   dangerouslySetInnerHTML={{ __html: post.content }}
                 />
               </article>
-              
+
               {/* Tags */}
               <div className="post-tags-section">
                 <h4>Tags</h4>
                 <div className="post-tags">
-                  {(Array.isArray(post.tags) ? post.tags : (post.tags as string).split(",")).map((tag: string) => (
-                    <span key={tag} className="tag">{tag.trim()}</span>
+                  {(Array.isArray(post.tags)
+                    ? post.tags
+                    : (post.tags as string).split(",")
+                  ).map((tag: string) => (
+                    <span key={tag} className="tag">
+                      {tag.trim()}
+                    </span>
                   ))}
                 </div>
               </div>
-              
+
               {/* Share Section */}
               <div className="post-share-section">
                 <h4>Share this article</h4>
-                <SocialShareButtons 
+                <SocialShareButtons
                   title={post.title}
                   description={post.description}
                 />
@@ -152,27 +168,37 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <div className="related-posts-grid">
                 {relatedPosts.map((relatedPost) => (
                   <article key={relatedPost.id} className="related-post-card">
-                    <Link href={`/blog/${relatedPost.slug}`} className="post-link">
+                    <Link
+                      href={`/blog/${relatedPost.slug}`}
+                      className="post-link"
+                    >
                       <div className="post-image">
-                        <img 
+                        <img
                           src={
-                            relatedPost.image 
-                              ? (typeof relatedPost.image === 'string' 
-                                  ? relatedPost.image 
-                                  : (process.env.NEXT_PUBLIC_STRAPI_URL + relatedPost.image.url))
-                              : '/images/blog/default-blog.jpg'
-                          } 
+                            relatedPost.image
+                              ? typeof relatedPost.image === "string"
+                                ? relatedPost.image
+                                : process.env.NEXT_PUBLIC_STRAPI_URL +
+                                  relatedPost.image.url
+                              : "/images/blog/default-blog.jpg"
+                          }
                           alt={relatedPost.title}
                           className="image-fluid"
                         />
-                        <div className="post-category">{relatedPost.category}</div>
+                        <div className="post-category">
+                          {relatedPost.category}
+                        </div>
                       </div>
                       <div className="post-content">
                         <div className="post-meta">
                           <span className="post-date">
-                            {new Date(relatedPost.publishedDate).toLocaleDateString()}
+                            {new Date(
+                              relatedPost.publishedDate,
+                            ).toLocaleDateString()}
                           </span>
-                          <span className="post-read-time">{relatedPost.readTime} min read</span>
+                          <span className="post-read-time">
+                            {relatedPost.readTime} min read
+                          </span>
                         </div>
                         <h3>{relatedPost.title}</h3>
                         <p>{relatedPost.description}</p>

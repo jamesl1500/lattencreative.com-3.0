@@ -1,20 +1,20 @@
 /**
  * Metadata Utilities
  * Helper functions for generating page metadata
- * 
+ *
  * @module libs/metadata
  */
 
 import type { Metadata } from "next";
-import { 
-  siteName, 
-  siteTagline, 
-  siteAuthor, 
-  siteDescription, 
-  siteKeywords, 
-  siteUrl, 
+import {
+  siteName,
+  siteTagline,
+  siteAuthor,
+  siteDescription,
+  siteKeywords,
+  siteUrl,
   siteLocale,
-  siteFavicon
+  siteFavicon,
 } from "./site";
 
 interface PageMetadataOptions {
@@ -29,11 +29,13 @@ interface PageMetadataOptions {
 /**
  * generatePageMetadata
  * Generate metadata object for a specific page
- * 
+ *
  * @param options - Page-specific metadata options
  * @returns Metadata object for the page
  */
-export async function generatePageMetadata(options: PageMetadataOptions = {}): Promise<Metadata> {
+export async function generatePageMetadata(
+  options: PageMetadataOptions = {},
+): Promise<Metadata> {
   const {
     title,
     description = await siteDescription(),
@@ -51,7 +53,7 @@ export async function generatePageMetadata(options: PageMetadataOptions = {}): P
 
   // Generate full title
   const fullTitle = title ? `${title} | ${await siteName()}` : await siteName();
-  
+
   // Generate canonical URL
   const canonicalUrl = new URL(canonicalPath, await siteUrl()).toString();
 
@@ -95,7 +97,7 @@ export async function generatePageMetadata(options: PageMetadataOptions = {}): P
         },
       ],
     };
-    
+
     metadata.twitter = {
       ...metadata.twitter,
       images: [ogImage],
@@ -116,7 +118,7 @@ export async function generatePageMetadata(options: PageMetadataOptions = {}): P
 /**
  * generateBlogPostMetadata
  * Generate metadata specifically for blog posts
- * 
+ *
  * @param title - Blog post title
  * @param description - Blog post description
  * @param slug - Blog post slug
@@ -131,7 +133,7 @@ export function generateBlogPostMetadata(
   slug: string,
   publishedDate?: string,
   tags: string[] = [],
-  ogImage?: string
+  ogImage?: string,
 ): Metadata {
   const canonicalPath = `/blog/${slug}`;
   const keywords = [...tags, "blog", "article"];
@@ -158,7 +160,7 @@ export function generateBlogPostMetadata(
 /**
  * generateServiceMetadata
  * Generate metadata specifically for service pages
- * 
+ *
  * @param serviceName - Service name
  * @param description - Service description
  * @param slug - Service slug
@@ -169,7 +171,7 @@ export function generateServiceMetadata(
   serviceName: string,
   description: string,
   slug: string,
-  ogImage?: string
+  ogImage?: string,
 ): Metadata {
   const canonicalPath = `/services/${slug}`;
   const keywords = [serviceName.toLowerCase(), "services", "digital agency"];

@@ -24,15 +24,7 @@ const nextConfig: NextConfig = {
       },
     ],
     // Add unoptimized for development if needed
-    unoptimized: process.env.NODE_ENV === 'development',
-  },
-  // Skip linting during builds
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  // Skip type checking during builds
-  typescript: {
-    ignoreBuildErrors: true,
+    unoptimized: process.env.NODE_ENV === "development",
   },
 };
 

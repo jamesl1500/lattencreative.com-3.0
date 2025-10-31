@@ -3,8 +3,17 @@ import { generatePageMetadata } from "../../libs/metadata";
 
 export const metadata: Metadata = generatePageMetadata({
   title: "Contact Us | Let's Create Something Amazing Together",
-  description: "Ready to transform your digital presence? Get in touch with Latten Creative for a free consultation. We're here to help bring your vision to life with expert web design and development.",
-  keywords: ["contact", "get in touch", "consultation", "quote", "free consultation", "web design", "development"],
+  description:
+    "Ready to transform your digital presence? Get in touch with Latten Creative for a free consultation. We're here to help bring your vision to life with expert web design and development.",
+  keywords: [
+    "contact",
+    "get in touch",
+    "consultation",
+    "quote",
+    "free consultation",
+    "web design",
+    "development",
+  ],
   canonicalPath: "/contact-us",
 });
 
@@ -12,14 +21,14 @@ export default function ContactUs() {
   return (
     <div className="page page-contact">
       <div className="page-inner container-fluid">
-        
         {/* Hero Section */}
         <div className="contact-hero">
           <div className="contact-hero-inner container">
             <h1>Let's Create Something Amazing Together</h1>
             <p className="hero-subtitle">
-              Ready to transform your digital presence? We're here to listen, understand your vision, 
-              and craft solutions that exceed your expectations. Let's start the conversation.
+              Ready to transform your digital presence? We're here to listen,
+              understand your vision, and craft solutions that exceed your
+              expectations. Let's start the conversation.
             </p>
             <div className="hero-stats">
               <div className="stat-item">
@@ -43,48 +52,83 @@ export default function ContactUs() {
           <div className="contact-section-inner container">
             <h2>Get In Touch</h2>
             <p className="section-subtitle">
-              Choose the method that works best for you. We're always here to help and answer any questions.
+              Choose the method that works best for you. We're always here to
+              help and answer any questions.
             </p>
-            
+
             <div className="contact-methods-grid">
               <div className="contact-method">
                 <div className="method-icon">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                    <polyline points="22,6 12,13 2,6"/>
+                  <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                    <polyline points="22,6 12,13 2,6" />
                   </svg>
                 </div>
                 <h3>Email Us</h3>
-                <p>Send us a detailed message and we'll get back to you within 24 hours.</p>
-                <a href="mailto:hello@lattencreative.com" className="contact-link">
+                <p>
+                  Send us a detailed message and we'll get back to you within 24
+                  hours.
+                </p>
+                <a
+                  href="mailto:hello@lattencreative.com"
+                  className="contact-link"
+                >
                   hello@lattencreative.com
                 </a>
               </div>
-              
+
               <div className="contact-method">
                 <div className="method-icon">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                   </svg>
                 </div>
                 <h3>Call Us</h3>
-                <p>Prefer to talk? Give us a call during business hours for immediate assistance.</p>
+                <p>
+                  Prefer to talk? Give us a call during business hours for
+                  immediate assistance.
+                </p>
                 <a href="tel:+1234567890" className="contact-link">
                   (123) 456-7890
                 </a>
               </div>
-              
+
               <div className="contact-method">
                 <div className="method-icon">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="12" cy="10" r="3"/>
-                    <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/>
+                  <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <circle cx="12" cy="10" r="3" />
+                    <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z" />
                   </svg>
                 </div>
                 <h3>Visit Us</h3>
-                <p>Stop by our office for a coffee and chat about your project in person.</p>
+                <p>
+                  Stop by our office for a coffee and chat about your project in
+                  person.
+                </p>
                 <address className="contact-link">
-                  123 Creative Street<br />
+                  123 Creative Street
+                  <br />
                   Design District, DC 12345
                 </address>
               </div>
@@ -99,46 +143,80 @@ export default function ContactUs() {
               <div className="form-intro">
                 <h2>Start Your Project</h2>
                 <p>
-                  Ready to begin? Fill out the form below and tell us about your project. 
-                  The more details you provide, the better we can understand your needs and 
-                  provide you with an accurate timeline and quote.
+                  Ready to begin? Fill out the form below and tell us about your
+                  project. The more details you provide, the better we can
+                  understand your needs and provide you with an accurate
+                  timeline and quote.
                 </p>
-                
+
                 <div className="form-benefits">
                   <div className="benefit-item">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <polyline points="20,6 9,17 4,12"/>
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <polyline points="20,6 9,17 4,12" />
                     </svg>
                     <span>Free consultation and project assessment</span>
                   </div>
                   <div className="benefit-item">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <polyline points="20,6 9,17 4,12"/>
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <polyline points="20,6 9,17 4,12" />
                     </svg>
-                    <span>Detailed project timeline and transparent pricing</span>
+                    <span>
+                      Detailed project timeline and transparent pricing
+                    </span>
                   </div>
                   <div className="benefit-item">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <polyline points="20,6 9,17 4,12"/>
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <polyline points="20,6 9,17 4,12" />
                     </svg>
                     <span>Personalized recommendations for your goals</span>
                   </div>
                 </div>
               </div>
-              
+
               <div className="form-container">
                 <form className="contact-form">
                   <div className="form-row">
                     <div className="form-group">
                       <label htmlFor="firstName">First Name *</label>
-                      <input type="text" id="firstName" name="firstName" required />
+                      <input
+                        type="text"
+                        id="firstName"
+                        name="firstName"
+                        required
+                      />
                     </div>
                     <div className="form-group">
                       <label htmlFor="lastName">Last Name *</label>
-                      <input type="text" id="lastName" name="lastName" required />
+                      <input
+                        type="text"
+                        id="lastName"
+                        name="lastName"
+                        required
+                      />
                     </div>
                   </div>
-                  
+
                   <div className="form-row">
                     <div className="form-group">
                       <label htmlFor="email">Email Address *</label>
@@ -149,12 +227,12 @@ export default function ContactUs() {
                       <input type="tel" id="phone" name="phone" />
                     </div>
                   </div>
-                  
+
                   <div className="form-group">
                     <label htmlFor="company">Company/Organization</label>
                     <input type="text" id="company" name="company" />
                   </div>
-                  
+
                   <div className="form-group">
                     <label htmlFor="projectType">Project Type *</label>
                     <select id="projectType" name="projectType" required>
@@ -169,7 +247,7 @@ export default function ContactUs() {
                       <option value="other">Other</option>
                     </select>
                   </div>
-                  
+
                   <div className="form-group">
                     <label htmlFor="budget">Project Budget</label>
                     <select id="budget" name="budget">
@@ -182,7 +260,7 @@ export default function ContactUs() {
                       <option value="discuss">Let's discuss</option>
                     </select>
                   </div>
-                  
+
                   <div className="form-group">
                     <label htmlFor="timeline">Desired Timeline</label>
                     <select id="timeline" name="timeline">
@@ -195,18 +273,20 @@ export default function ContactUs() {
                       <option value="flexible">I'm flexible</option>
                     </select>
                   </div>
-                  
+
                   <div className="form-group">
-                    <label htmlFor="message">Tell us about your project *</label>
-                    <textarea 
-                      id="message" 
-                      name="message" 
-                      rows={6} 
+                    <label htmlFor="message">
+                      Tell us about your project *
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={6}
                       placeholder="Please describe your project goals, target audience, key features you need, and any specific requirements or ideas you have in mind..."
                       required
                     ></textarea>
                   </div>
-                  
+
                   <div className="form-group form-group-checkbox">
                     <label className="checkbox-label">
                       <input type="checkbox" name="newsletter" />
@@ -214,13 +294,13 @@ export default function ContactUs() {
                       I'd like to receive updates about design trends and tips
                     </label>
                   </div>
-                  
+
                   <button type="submit" className="btn btn-primary btn-large">
                     Send My Message
                   </button>
-                  
+
                   <p className="form-note">
-                    By submitting this form, you agree to our privacy policy. 
+                    By submitting this form, you agree to our privacy policy.
                     We'll never share your information with third parties.
                   </p>
                 </form>
@@ -236,37 +316,41 @@ export default function ContactUs() {
             <p className="section-subtitle">
               Quick answers to common questions about working with us.
             </p>
-            
+
             <div className="faq-grid">
               <div className="faq-item">
                 <h3>How long does a typical project take?</h3>
                 <p>
-                  Most website projects take 4-8 weeks from start to finish, depending on complexity. 
-                  We'll provide a detailed timeline during our initial consultation.
+                  Most website projects take 4-8 weeks from start to finish,
+                  depending on complexity. We'll provide a detailed timeline
+                  during our initial consultation.
                 </p>
               </div>
-              
+
               <div className="faq-item">
                 <h3>Do you work with small businesses?</h3>
                 <p>
-                  Absolutely! We work with businesses of all sizes, from startups to established 
-                  enterprises. We tailor our approach to fit your budget and goals.
+                  Absolutely! We work with businesses of all sizes, from
+                  startups to established enterprises. We tailor our approach to
+                  fit your budget and goals.
                 </p>
               </div>
-              
+
               <div className="faq-item">
                 <h3>What's included in your web design service?</h3>
                 <p>
-                  Our comprehensive service includes strategy, design, development, content integration, 
-                  SEO optimization, testing, and training. We handle everything from start to launch.
+                  Our comprehensive service includes strategy, design,
+                  development, content integration, SEO optimization, testing,
+                  and training. We handle everything from start to launch.
                 </p>
               </div>
-              
+
               <div className="faq-item">
                 <h3>Do you provide ongoing support?</h3>
                 <p>
-                  Yes! We offer various maintenance packages to keep your website secure, updated, 
-                  and performing optimally. We're here for the long haul.
+                  Yes! We offer various maintenance packages to keep your
+                  website secure, updated, and performing optimally. We're here
+                  for the long haul.
                 </p>
               </div>
             </div>
@@ -279,11 +363,15 @@ export default function ContactUs() {
             <div className="cta-content">
               <h2>Ready to Get Started?</h2>
               <p>
-                Don't wait – your perfect website is just a conversation away. 
-                Let's discuss your project and see how we can help you achieve your goals.
+                Don't wait – your perfect website is just a conversation away.
+                Let's discuss your project and see how we can help you achieve
+                your goals.
               </p>
               <div className="cta-actions">
-                <a href="mailto:hello@lattencreative.com" className="btn btn-primary">
+                <a
+                  href="mailto:hello@lattencreative.com"
+                  className="btn btn-primary"
+                >
                   Send Us an Email
                 </a>
                 <a href="tel:+1234567890" className="btn btn-secondary">
@@ -293,7 +381,6 @@ export default function ContactUs() {
             </div>
           </div>
         </section>
-
       </div>
     </div>
   );

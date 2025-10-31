@@ -1,12 +1,12 @@
 /**
  * Site Data Hooks
  * React hooks for fetching and caching site data
- * 
+ *
  * @module hooks/useSiteData
  */
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { fetchFromStrapi } from "@/libs/api";
 
 interface SiteData {
@@ -29,19 +29,19 @@ export const useSiteData = () => {
     const fetchSiteData = async () => {
       try {
         setLoading(true);
-        const response = await fetchFromStrapi('/site-detail');
-        
+        const response = await fetchFromStrapi("/site-detail");
+
         if (isMounted && response?.data) {
           setSiteData(response.data);
         }
       } catch (err) {
         if (isMounted) {
           console.error("Error fetching site data:", err);
-          setError('Failed to fetch site data');
+          setError("Failed to fetch site data");
           // Set fallback data
           setSiteData({
-            siteName: 'Latten Creative',
-            siteTagline: 'Creative Solutions for Modern Businesses'
+            siteName: "Latten Creative",
+            siteTagline: "Creative Solutions for Modern Businesses",
           });
         }
       } finally {
@@ -63,7 +63,8 @@ export const useSiteData = () => {
     siteData,
     loading,
     error,
-    siteName: siteData.siteName || 'Latten Creative',
-    siteTagline: siteData.siteTagline || 'Creative Solutions for Modern Businesses'
+    siteName: siteData.siteName || "Latten Creative",
+    siteTagline:
+      siteData.siteTagline || "Creative Solutions for Modern Businesses",
   };
 };

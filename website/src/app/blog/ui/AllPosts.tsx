@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import { use } from "react";
@@ -18,7 +18,7 @@ export default function AllPosts({ postsPromise }: AllPostsProps) {
         <h2>All Articles</h2>
         <div className="blog-posts-grid">
           {posts.map((post) => (
-            <Post key={ post.id } post={ post } />
+            <Post key={post.id} post={post} />
           ))}
         </div>
       </div>
