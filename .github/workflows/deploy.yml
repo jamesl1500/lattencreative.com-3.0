@@ -38,7 +38,7 @@ jobs:
       working-directory: ./website
       run: npm run build
       env:
-        NEXT_PUBLIC_STRAPI_URL: ${{ secrets.NEXT_PUBLIC_STRAPI_URL }}
+        NEXT_PUBLIC_STRAPI_URL: ${{ secrets.NEXT_PUBLIC_STRAPI_API_URL }}
 
     - name: Deploy to server
       uses: appleboy/ssh-action@v1.0.0
