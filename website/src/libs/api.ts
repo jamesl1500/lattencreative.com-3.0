@@ -35,7 +35,7 @@ export const fetchFromStrapi = async (endpoint: string, params = {}) => {
     return response.data;
   } catch (error) {
     console.error(
-      `Error fetching data from Strapi endpoint ${endpoint}:`,
+      `Error fetching data from Strapi endpoint ${STRAPI_API_URL}${endpoint}:`,
       error,
     );
     throw error;
