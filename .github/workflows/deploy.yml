@@ -51,6 +51,7 @@ jobs:
       run: |
         if [ -f .env ]; then
           cat .env >> $GITHUB_ENV
+          echo "Enviroment Variables for website found"
         fi
 
     - name: Verify Strapi environment variables
