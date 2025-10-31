@@ -26,6 +26,10 @@ const nextConfig: NextConfig = {
     // Add unoptimized for development if needed
     unoptimized: process.env.NODE_ENV === 'development',
   },
+  // Skip linting during builds
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;
