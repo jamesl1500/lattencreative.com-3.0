@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { BlogPost } from "@/libs/data/blog";
+import { getImageUrl } from "@/libs/data/services";
 
 interface PostProps {
   post: BlogPost;
@@ -19,9 +20,7 @@ export default function Post({ post }: PostProps) {
   console.log(post);
   // Craft image URL
   const imageUrl = post.image
-    ? typeof post.image === "string"
-      ? post.image
-      : process.env.NEXT_PUBLIC_STRAPI_URL + post.image.url
+    ? getImageUrl(post.image)
     : "/images/blog/default-blog.jpg";
 
   return (

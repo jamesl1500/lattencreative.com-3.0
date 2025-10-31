@@ -127,18 +127,18 @@ export async function generatePageMetadata(
  * @param ogImage - Open Graph image URL
  * @returns Metadata object for the blog post
  */
-export function generateBlogPostMetadata(
+export async function generateBlogPostMetadata(
   title: string,
   description: string,
   slug: string,
   publishedDate?: string,
   tags: string[] = [],
   ogImage?: string,
-): Metadata {
+): Promise<Metadata> {
   const canonicalPath = `/blog/${slug}`;
   const keywords = [...tags, "blog", "article"];
 
-  const metadata = generatePageMetadata({
+  const metadata = await generatePageMetadata({
     title,
     description,
     keywords,
@@ -167,16 +167,16 @@ export function generateBlogPostMetadata(
  * @param ogImage - Open Graph image URL
  * @returns Metadata object for the service page
  */
-export function generateServiceMetadata(
+export async function generateServiceMetadata(
   serviceName: string,
   description: string,
   slug: string,
   ogImage?: string,
-): Metadata {
+): Promise<Metadata> {
   const canonicalPath = `/services/${slug}`;
   const keywords = [serviceName.toLowerCase(), "services", "digital agency"];
 
-  return generatePageMetadata({
+  return await generatePageMetadata({
     title: serviceName,
     description,
     keywords,

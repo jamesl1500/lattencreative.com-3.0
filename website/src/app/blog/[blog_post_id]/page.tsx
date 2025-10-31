@@ -5,6 +5,7 @@ import {
   getRelatedPosts,
   type BlogPost,
 } from "@/libs/data/blog";
+import { getImageUrl } from "@/libs/data/services";
 import { generateBlogPostMetadata } from "@/libs/metadata";
 import SocialShareButtons from "@/components/SocialShareButtons";
 import NewsletterForm from "@/components/NewsletterForm";
@@ -22,14 +23,14 @@ export async function generateMetadata({
   const post = await getBlogPostBySlug(params.blog_post_id);
 
   if (!post) {
-    return generateBlogPostMetadata(
+    return await generateBlogPostMetadata(
       "Blog Post Not Found",
       "The requested blog post could not be found.",
       params.blog_post_id,
     );
   }
 
-  return generateBlogPostMetadata(
+  return await generateBlogPostMetadata(
     post.title,
     post.description,
     params.blog_post_id,
@@ -109,11 +110,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             {post.image && (
               <div className="post-featured-image">
                 <img
-                  src={
-                    typeof post.image === "string"
-                      ? post.image
-                      : process.env.NEXT_PUBLIC_STRAPI_URL + post.image.url
-                  }
+                  src={getImageUrl(post.image)}
                   alt={post.title}
                   className="image-fluid"
                 />
@@ -176,10 +173,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         <img
                           src={
                             relatedPost.image
-                              ? typeof relatedPost.image === "string"
-                                ? relatedPost.image
-                                : process.env.NEXT_PUBLIC_STRAPI_URL +
-                                  relatedPost.image.url
+                              ? getImageUrl(relatedPost.image)
                               : "/images/blog/default-blog.jpg"
                           }
                           alt={relatedPost.title}

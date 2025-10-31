@@ -6,7 +6,63 @@
  */
 import { fetchFromStrapi } from "../api";
 
+// Helper function to get image URL
+const getImageUrl = (image: StrapiImage | string | { url: string; formats?: any } | undefined): string => {
+  if (!image) {
+    return '';
+  }
+  if (typeof image === 'string') {
+    return image;
+  }
+  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337';
+  return `${baseUrl}${image.url}`;
+};
+
 // Types
+interface StrapiImage {
+  id: number;
+  url: string;
+  alternativeText?: string;
+  caption?: string;
+  width?: number;
+  height?: number;
+}
+
+interface ProcessStep {
+  id: number;
+  stepNumber: number;
+  title: string;
+  description: string;
+  icon?: string;
+  estimatedDuration?: string;
+  deliverables?: any;
+}
+
+interface Pricing {
+  id: number;
+  title: string;
+  price?: number;
+  currency?: string;
+  period?: string;
+  description?: string;
+  features?: any;
+  isPopular?: boolean;
+  ctaText?: string;
+  ctaUrl?: string;
+}
+
+interface Testimonial {
+  id: number;
+  quote: string;
+  clientName: string;
+  clientTitle?: string;
+  company?: string;
+  avatar?: StrapiImage;
+  rating?: number;
+  projectType?: string;
+  featured?: boolean;
+}
+
 interface Service {
   id: number;
   name: string;
@@ -14,11 +70,12 @@ interface Service {
   tagline: string;
   slug: string; // Link to service page
   category: string; // e.g., "Web Design", "SEO", etc.
-  image: string;
-  pricing?: string[];
-  features?: string[];
-  testimonials?: string[];
-  processSteps?: string[];
+  image: StrapiImage | string; // Can be either Strapi image object or string URL
+  icon?: string;
+  features?: string;
+  pricing?: Pricing[];
+  testimonials?: Testimonial[];
+  processSteps?: ProcessStep[];
 }
 
 /**
@@ -118,4 +175,4 @@ const getServicesData = async (): Promise<Service[]> => {
   ];
 };
 
-export { getServicesData, fetchServiceById };
+export { getServicesData, fetchServiceById, getImageUrl, type Service, type ProcessStep, type Pricing, type Testimonial, type StrapiImage };

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { generatePageMetadata } from "../../libs/metadata";
-import { getServicesData } from "../../libs/data/services";
+import { getServicesData, getImageUrl } from "../../libs/data/services";
 
 export const metadata: Promise<Metadata> = generatePageMetadata({
   title: "Our Services",
@@ -101,7 +101,7 @@ export default async function Services() {
                   <div key={service.id} className="service-card">
                     <div className="service-card-image">
                       <Image
-                        src={`${process.env.NEXT_PUBLIC_STRAPI_URL || "http://127.0.0.1:1337"}${service.image.url}`}
+                        src={getImageUrl(service.image)}
                         alt={service.name}
                         fill
                         style={{ objectFit: "cover" }}
@@ -157,7 +157,7 @@ export default async function Services() {
                           >
                             <div className="category-service-image">
                               <Image
-                                src={`${process.env.NEXT_PUBLIC_STRAPI_URL || "http://127.0.0.1:1337"}${service.image.url}`}
+                                src={getImageUrl(service.image)}
                                 alt={service.name}
                                 width={80}
                                 height={80}

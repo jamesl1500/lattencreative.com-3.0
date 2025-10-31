@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { generateServiceMetadata } from "@/libs/metadata";
-import { fetchServiceById } from "@/libs/data/services";
+import { fetchServiceById, getImageUrl, type Service, type ProcessStep } from "@/libs/data/services";
 
 // This would typically come from your CMS or API
 interface ServicePageProps {
@@ -25,13 +25,13 @@ export async function generateMetadata({
   const service = await getServiceData(resolvedParams.service_id);
 
   if (!service) {
-    return generateServiceMetadata(
+    return await generateServiceMetadata(
       "Service Not Found",
       "The requested service could not be found.",
       resolvedParams.service_id,
     );
   }
-  return generateServiceMetadata(
+  return await generateServiceMetadata(
     service.name,
     service.description,
     resolvedParams.service_id,
@@ -66,7 +66,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
           <div className="service-hero-inner">
             <div className="service-hero-image">
               <Image
-                src={`${process.env.NEXT_PUBLIC_STRAPI_URL || "http://127.0.0.1:1337"}${service.image.url}`}
+                src={getImageUrl(service.image)}
                 alt={service.name}
                 width={600}
                 height={400}
@@ -98,7 +98,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
         </section>
 
         {/* Features Section */}
-        {service.features && service.features.length > 0 && (
+        {service.features && (
           <section className="service-section service-features">
             <div className="service-section-inner">
               <h2>What's Included</h2>
