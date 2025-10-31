@@ -6,20 +6,22 @@ import FeaturedPosts from "./ui/FeaturedPosts";
 import AllPosts from "./ui/AllPosts";
 import BlogPostsLoading from "./ui/BlogPostsLoading";
 
-export const metadata: Metadata = generatePageMetadata({
-  title: "Blog | Latest Insights & Industry Updates",
-  description:
-    "Stay up-to-date with the latest trends in web design, development, digital marketing, and technology. Expert insights and practical tips from our team.",
-  canonicalPath: "/blog",
-  keywords: [
-    "blog",
-    "web design",
-    "development",
-    "digital marketing",
-    "technology",
-    "insights",
-  ],
-});
+export async function generateMetadata(): Promise<Metadata> {
+  return generatePageMetadata({
+    title: "Blog | Latest Insights & Industry Updates",
+    description:
+      "Stay up-to-date with the latest trends in web design, development, digital marketing, and technology. Expert insights and practical tips from our team.",
+    canonicalPath: "/blog",
+    keywords: [
+      "blog",
+      "web design",
+      "development",
+      "digital marketing",
+      "technology",
+      "insights",
+    ],
+  });
+}
 
 export default function BlogPage() {
   // Create the promise for blog posts

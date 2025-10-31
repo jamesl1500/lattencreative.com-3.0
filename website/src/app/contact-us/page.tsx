@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
 import { generatePageMetadata } from "../../libs/metadata";
 
-export const metadata: Metadata = generatePageMetadata({
-  title: "Contact Us | Let's Create Something Amazing Together",
-  description:
-    "Ready to transform your digital presence? Get in touch with Latten Creative for a free consultation. We're here to help bring your vision to life with expert web design and development.",
-  keywords: [
-    "contact",
-    "get in touch",
-    "consultation",
-    "quote",
-    "free consultation",
-    "web design",
-    "development",
-  ],
-  canonicalPath: "/contact-us",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  return generatePageMetadata({
+    title: "Contact Us | Let's Create Something Amazing Together",
+    description:
+      "Ready to transform your digital presence? Get in touch with Latten Creative for a free consultation. We're here to help bring your vision to life with expert web design and development.",
+    keywords: [
+      "contact",
+      "get in touch",
+      "consultation",
+      "quote",
+      "free consultation",
+      "web design",
+      "development",
+    ],
+    canonicalPath: "/contact-us",
+  });
+}
 
 export default function ContactUs() {
   return (

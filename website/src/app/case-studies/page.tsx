@@ -7,12 +7,14 @@ import {
   getCategories,
 } from "../../libs/data/case_studies";
 
-export const metadata: Metadata = generatePageMetadata({
-  title: "Case Studies",
-  description:
-    "Explore our portfolio of successful projects and discover how we've helped businesses transform their digital presence and achieve remarkable results.",
-  canonicalPath: "/case-studies",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  return generatePageMetadata({
+    title: "Case Studies",
+    description:
+      "Explore our portfolio of successful projects and discover how we've helped businesses transform their digital presence and achieve remarkable results.",
+    canonicalPath: "/case-studies",
+  });
+}
 
 export default function CaseStudiesPage() {
   const caseStudies = getCaseStudiesData();

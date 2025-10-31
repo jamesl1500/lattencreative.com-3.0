@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { generatePageMetadata } from "../libs/metadata";
 import { getServicesData } from "../libs/data/services";
 
-export const metadata: Metadata = generatePageMetadata({
+export const metadata: Metadata = await generatePageMetadata({
   title: "Home",
   description:
     "Discover our comprehensive digital solutions designed to elevate your business presence online.",
