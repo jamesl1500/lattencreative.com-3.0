@@ -73,32 +73,117 @@ chmod +x deploy.sh
 Go to your GitHub repository → Settings → Secrets and variables → Actions, and add these secrets:
 
 ```
+# Required GitHub Secrets for CI/CD
 HOST=your-server-ip-address
 USERNAME=your-server-username
-PORT=22 (or your SSH port)
-DEPLOY_KEY=your-private-ssh-key
+PORT=22
+DEPLOY_KEY=your-private-ssh-key (multi-line)
 DEPLOY_PATH=/var/www/lattencreative.com
-NEXT_PUBLIC_STRAPI_URL=http://your-domain.com
+
+# Next.js Build Variables (used during CI build)
+NEXT_PUBLIC_STRAPI_API_URL=https://api.yourdomain.com/api
+NEXT_PUBLIC_STRAPI_URL=https://api.yourdomain.com
+
+# Optional: API Build Variables (if Strapi build needs DB access during CI)
+API_DATABASE_HOST=127.0.0.1
+API_DATABASE_PORT=3306
+API_DATABASE_NAME=latten_db
+API_DATABASE_USERNAME=latten_user
+API_DATABASE_PASSWORD=supersecret
+ADMIN_JWT_SECRET=your-admin-jwt-secret
+APP_KEYS=key1,key2,key3,key4
+API_TOKEN_SALT=your-api-token-salt
+
+# Optional: If website build needs API access during CI
+STRAPI_API_TOKEN=your-strapi-api-token
 ```
 
 ### 2. SSH Key Setup
 
 1. Generate SSH key pair on your local machine:
 ```bash
-ssh-keygen -t rsa -b 4096 -C "github-deploy-key"
+ssh-keygen -t rsa -b 4096 -C "github-deploy-key" -f ~/.ssh/lattencreative_deploy
 ```
 
-2. Add the public key to your server's `~/.ssh/authorized_keys`:
+2. Copy the public key to your server:
 ```bash
-# On your server
+# Copy public key content
+cat ~/.ssh/lattencreative_deploy.pub
+
+# On your server (replace 'deploy' with your username)
 mkdir -p ~/.ssh
-cat >> ~/.ssh/authorized_keys << 'EOF'
-your-public-key-content-here
-EOF
+echo "your-public-key-content-here" >> ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
+chmod 700 ~/.ssh
 ```
 
-3. Add the private key content to GitHub secrets as `DEPLOY_KEY`
+3. Test SSH connection:
+```bash
+ssh -i ~/.ssh/lattencreative_deploy your-username@your-server-ip
+```
+
+### 3. GitHub Secrets Configuration
+
+Navigate to your GitHub repository:
+1. Go to **Settings** → **Secrets and variables** → **Actions**
+2. Click **New repository secret** for each of the following:
+
+#### Required Secrets:
+```bash
+# SSH Configuration
+DEPLOY_KEY=<content of ~/.ssh/lattencreative_deploy (private key)>
+HOST=your-server-ip-address
+USERNAME=your-server-username
+PORT=22
+DEPLOY_PATH=/var/www/lattencreative.com
+
+# Next.js Build Variables
+NEXT_PUBLIC_STRAPI_API_URL=https://api.yourdomain.com/api
+NEXT_PUBLIC_STRAPI_URL=https://api.yourdomain.com
+```
+
+#### Optional API Build Secrets (if Strapi build needs database access):
+```bash
+API_DATABASE_HOST=127.0.0.1
+API_DATABASE_PORT=3306
+API_DATABASE_NAME=latten_db
+API_DATABASE_USERNAME=latten_user
+API_DATABASE_PASSWORD=supersecret
+ADMIN_JWT_SECRET=your-admin-jwt-secret
+APP_KEYS=key1,key2,key3,key4
+API_TOKEN_SALT=your-api-token-salt
+TRANSFER_TOKEN_SALT=your-transfer-token-salt
+JWT_SECRET=your-jwt-secret
+```
+
+#### Optional Website Build Secrets:
+```bash
+STRAPI_API_TOKEN=your-strapi-api-token  # If website needs API access during build
+```
+
+### 4. Server Environment Setup
+
+1. **Create project directory on server:**
+```bash
+sudo mkdir -p /var/www/lattencreative.com
+sudo chown $USER:$USER /var/www/lattencreative.com
+cd /var/www/lattencreative.com
+git clone https://github.com/jamesl1500/lattencreative.com-3.0.git .
+```
+
+2. **Create API environment file:**
+```bash
+# Create api/.env from api/.env.example
+cp api/.env.example api/.env
+nano api/.env  # Edit with your production values
+```
+
+3. **Create Website environment file:**
+```bash
+# Create website/.env from website/.env.example  
+cp website/.env.example website/.env
+nano website/.env  # Edit with your production values
+```
 
 ## Environment Configuration
 
@@ -110,6 +195,21 @@ Create `/var/www/lattencreative.com/api/.env`:
 # Server
 HOST=127.0.0.1
 PORT=1337
+
+# Security Best Practices
+
+⚠️ **Important**: Never commit secrets to your repository!
+
+1. **GitHub Secrets**: Store deployment credentials and build-time environment variables as GitHub repository secrets
+2. **Server Environment**: Store runtime secrets in `.env` files on the server (not in the repository)
+3. **Public Variables**: Only use `NEXT_PUBLIC_*` for variables that can be safely exposed to client-side code
+4. **Secret Rotation**: Regularly rotate API tokens, JWT secrets, and database passwords
+
+## Environment Variable Strategy
+
+- **GitHub Secrets** (for CI/CD): SSH keys, server credentials, build-time API URLs
+- **Server `.env` files** (for runtime): Database credentials, JWT secrets, API tokens, mail providers
+- **Repository** (committed): Only non-sensitive configuration and `.env.example` templates
 
 # Secrets (generate new ones for production)
 APP_KEYS=your-app-keys
@@ -248,6 +348,147 @@ mysqldump -u lattencreative -p lattencreative_com > backup_$(date +%Y%m%d).sql
 
 # Backup uploaded files (if any)
 tar -czf uploads_backup_$(date +%Y%m%d).tar.gz /var/www/lattencreative.com/api/public/uploads/
+```
+
+## Testing and Verification
+
+### 1. Pre-Deployment Testing
+
+**Test SSH connection:**
+```bash
+ssh -i ~/.ssh/lattencreative_deploy your-username@your-server-ip
+```
+
+**Test GitHub Actions workflow:**
+```bash
+# Push to master branch or trigger manually from GitHub Actions tab
+git push origin master
+```
+
+**Dry-run deployment script locally:**
+```bash
+# Clone the repo on your server first
+cd /var/www/lattencreative.com
+chmod +x deploy.sh
+# Review the script before running
+cat deploy.sh
+```
+
+### 2. Manual Server Deployment Test
+
+**Run deployment manually:**
+```bash
+cd /var/www/lattencreative.com
+git pull origin master
+chmod +x deploy.sh
+./deploy.sh
+```
+
+**Check service status:**
+```bash
+# Check PM2 processes
+pm2 status
+pm2 logs
+
+# Check Apache status
+sudo systemctl status apache2
+sudo apache2ctl configtest
+
+# Check port bindings
+sudo netstat -tlnp | grep -E ':1337|:3000|:80|:443'
+```
+
+### 3. Health Check Endpoints
+
+**API Health Checks:**
+```bash
+# Strapi API
+curl -I http://127.0.0.1:1337/api/services
+curl -I http://127.0.0.1:1337/admin
+
+# Via Apache proxy
+curl -I http://your-domain.com/api/services
+curl -I http://your-domain.com/admin
+```
+
+**Website Health Checks:**
+```bash
+# Next.js directly
+curl -I http://127.0.0.1:3000
+
+# Via Apache proxy
+curl -I http://your-domain.com
+```
+
+**SSL Certificate Check:**
+```bash
+# Check SSL certificate
+openssl s_client -connect your-domain.com:443 -servername your-domain.com < /dev/null
+```
+
+### 4. Troubleshooting Common Issues
+
+**Check logs:**
+```bash
+# PM2 logs
+pm2 logs strapi-api
+pm2 logs nextjs-website
+
+# Apache logs  
+sudo tail -f /var/log/apache2/lattencreative_error.log
+sudo tail -f /var/log/apache2/lattencreative_access.log
+
+# System logs
+sudo journalctl -u apache2 -f
+```
+
+**Reset deployment if needed:**
+```bash
+# Stop services
+pm2 stop all
+
+# Clear builds
+rm -rf api/dist api/node_modules
+rm -rf website/.next website/node_modules
+
+# Re-run deployment
+./deploy.sh
+```
+
+**Database connection test:**
+```bash
+# Test MySQL connection
+mysql -h 127.0.0.1 -u lattencreative -p lattencreative_com
+```
+
+### 5. Post-Deployment Verification Checklist
+
+- [ ] Strapi API responds at `/api/services`
+- [ ] Strapi Admin accessible at `/admin` 
+- [ ] Next.js website loads at `/`
+- [ ] Images and uploads work correctly
+- [ ] Database connections are working
+- [ ] PM2 processes are running and stable
+- [ ] Apache proxy rules work correctly
+- [ ] SSL certificate is valid (if configured)
+- [ ] All environment variables are loaded correctly
+- [ ] Email functionality works (if configured)
+- [ ] Backup scripts run without errors
+
+### 6. Performance Monitoring
+
+**Basic monitoring commands:**
+```bash
+# System resources
+htop
+df -h
+free -h
+
+# Application performance
+pm2 monit
+
+# Apache status
+sudo systemctl status apache2
 ```
 
 ## Security Considerations

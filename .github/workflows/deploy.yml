@@ -29,6 +29,19 @@ jobs:
     - name: Build API
       working-directory: ./api
       run: npm run build
+      env:
+        NODE_ENV: production
+        DATABASE_CLIENT: ${{ secrets.API_DATABASE_CLIENT || 'mysql' }}
+        DATABASE_HOST: ${{ secrets.API_DATABASE_HOST }}
+        DATABASE_PORT: ${{ secrets.API_DATABASE_PORT || '3306' }}
+        DATABASE_NAME: ${{ secrets.API_DATABASE_NAME }}
+        DATABASE_USERNAME: ${{ secrets.API_DATABASE_USERNAME }}
+        DATABASE_PASSWORD: ${{ secrets.API_DATABASE_PASSWORD }}
+        APP_KEYS: ${{ secrets.APP_KEYS }}
+        API_TOKEN_SALT: ${{ secrets.API_TOKEN_SALT }}
+        ADMIN_JWT_SECRET: ${{ secrets.ADMIN_JWT_SECRET }}
+        TRANSFER_TOKEN_SALT: ${{ secrets.TRANSFER_TOKEN_SALT }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
     - name: Install Website dependencies
       working-directory: ./website
@@ -38,7 +51,9 @@ jobs:
       working-directory: ./website
       run: npm run build
       env:
-        NEXT_PUBLIC_STRAPI_URL: ${{ secrets.NEXT_PUBLIC_STRAPI_API_URL }}
+        NEXT_PUBLIC_STRAPI_API_URL: ${{ secrets.NEXT_PUBLIC_STRAPI_API_URL }}
+        NEXT_PUBLIC_STRAPI_URL: ${{ secrets.NEXT_PUBLIC_STRAPI_URL }}
+        STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
 
     - name: Deploy to server
       uses: appleboy/ssh-action@v1.0.0
