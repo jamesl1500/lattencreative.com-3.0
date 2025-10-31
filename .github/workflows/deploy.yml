@@ -8,87 +8,23 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '22'
-        cache: 'npm'
-        cache-dependency-path: |
-          api/package-lock.json
-          website/package-lock.json
-
-    - name: Install API dependencies
-      working-directory: ./api
-      run: npm ci
-
-    - name: Build API
-      working-directory: ./api
-      run: npm run build
-      env:
-        NODE_ENV: production
-        DATABASE_CLIENT: ${{ secrets.API_DATABASE_CLIENT || 'mysql' }}
-        DATABASE_HOST: ${{ secrets.API_DATABASE_HOST }}
-        DATABASE_PORT: ${{ secrets.API_DATABASE_PORT || '3306' }}
-        DATABASE_NAME: ${{ secrets.API_DATABASE_NAME }}
-        DATABASE_USERNAME: ${{ secrets.API_DATABASE_USERNAME }}
-        DATABASE_PASSWORD: ${{ secrets.API_DATABASE_PASSWORD }}
-        APP_KEYS: ${{ secrets.APP_KEYS }}
-        API_TOKEN_SALT: ${{ secrets.API_TOKEN_SALT }}
-        ADMIN_JWT_SECRET: ${{ secrets.ADMIN_JWT_SECRET }}
-        TRANSFER_TOKEN_SALT: ${{ secrets.TRANSFER_TOKEN_SALT }}
-        JWT_SECRET: ${{ secrets.JWT_SECRET }}
-
-    - name: Install Website dependencies
-      working-directory: ./website
-      run: npm ci
-
-    - name: Load .env variables
-      run: |
-        if [ -f .env ]; then
-          cat .env >> $GITHUB_ENV
-          echo "Enviroment Variables for website found"
-        fi
-
-    - name: Verify Strapi environment variables
-      run: |
-        if [ -z "${{ env.NEXT_PUBLIC_STRAPI_API_URL }}" ]; then
-          echo "Error: NEXT_PUBLIC_STRAPI_API_URL is not set"
-          exit 1
-        fi
-        echo "Strapi API URL is configured"
-
-    - name: Build Website
-      working-directory: ./website
-      run: npm run build
-      env:
-        NODE_ENV: production
-        NEXT_PUBLIC_STRAPI_API_URL: ${{ secrets.NEXT_PUBLIC_STRAPI_API_URL }}
-        NEXT_PUBLIC_STRAPI_URL: ${{ secrets.NEXT_PUBLIC_STRAPI_URL }}
-        STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
-
-    - name: Deploy to server
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.DEPLOY_KEY }}
-        port: ${{ secrets.PORT }}
-        script: |
-          cd ${{ secrets.DEPLOY_PATH }}
-          git pull origin master
-          chmod +x deploy.sh
-          ./deploy.sh
-
-    - name: Notify deployment status
-      if: always()
-      run: |
-        if [ ${{ job.status }} == 'success' ]; then
-          echo "✅ Deployment successful!"
-        else
-          echo "❌ Deployment failed!"
-        fi
+      - name: Deploy to AWS
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ${{ secrets.AWS_USER }}
+          key: ${{ secrets.AWS_SSH_KEY }}
+          port: ${{ secrets.AWS_PORT }}
+          script: |
+            echo "🚀 Starting deployment on server..."
+            cd ${{ secrets.DEPLOY_PATH }}
+            git fetch origin main
+            git reset --hard origin/main
+            chmod +x deploy.sh
+            ./deploy.sh production
+            echo "✅ Deployment finished!"
