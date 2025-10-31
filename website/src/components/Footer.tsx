@@ -178,9 +178,6 @@ export default async function Footer() {
                             <Link href="/terms" className="footer-bottom-link">
                                 Terms of Service
                             </Link>
-                            <Link href="/cookies" className="footer-bottom-link">
-                                Cookie Policy
-                            </Link>
                         </div>
                     </div>
                 </div>

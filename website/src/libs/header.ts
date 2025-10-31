@@ -23,7 +23,7 @@ const getNavItems = () => {
         { name: "Home", path: "/" },
         { name: "About", path: "/about" },
         { name: "Services", path: "/services" },
-        { name: "Case Studies", path: "/case-studies" },
+        //{ name: "Case Studies", path: "/case-studies" },
     ];
 }
 
@@ -38,7 +38,7 @@ const getCTAItems = () => {
 
     // Return static items for now
     return [
-        { name: "Blog", path: "/blog" },
+        //{ name: "Blog", path: "/blog" },
         { name: "Contact Us", path: "/contact-us" },
     ];
 }
