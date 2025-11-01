@@ -33,6 +33,7 @@ cd "$DEPLOY_DIR" || { echo "❌ Directory not found: $DEPLOY_DIR"; exit 1; }
 # Git Update
 # =====================================
 echo "📦 Pulling latest code..."
+git stash save "Auto-stash before deploy"
 git fetch origin "$REPO_BRANCH"
 git reset --hard "origin/$REPO_BRANCH"
 
