@@ -34,7 +34,7 @@ cd "$DEPLOY_DIR" || { echo "❌ Directory not found: $DEPLOY_DIR"; exit 1; }
 # =====================================
 echo "🔧 Setting up environment..."
 export NODE_ENV="$APP_ENV"
-export PATH="$HOME/.nvm/versions/node/$(nvm version)/bin:$PATH"
+export PATH="$HOME/.nvm/versions/node/v24.11.0/bin:$PATH"
 
 # =====================================
 # Git Update
