@@ -53,7 +53,7 @@ npm ci --legacy-peer-deps
 npm run build
 
 echo "🔁 Restarting Strapi with PM2..."
-pm2 restart "$PM2_STRAPI_NAME" || pm2 start npm --name "$PM2_STRAPI_NAME" -- run start -- -p 1337
+pm2 restart "$PM2_STRAPI_NAME" || pm2 start npm --name "$PM2_STRAPI_NAME" -- run start
 
 # =====================================
 # Build & Restart Next.js
