@@ -30,6 +30,13 @@ echo "=========================================="
 cd "$DEPLOY_DIR" || { echo "❌ Directory not found: $DEPLOY_DIR"; exit 1; }
 
 # =====================================
+# Environment Setup
+# =====================================
+echo "🔧 Setting up environment..."
+export NODE_ENV="$APP_ENV"
+export PATH="$HOME/.nvm/versions/node/$(nvm version)/bin:$PATH"
+
+# =====================================
 # Git Update
 # =====================================
 echo "📦 Pulling latest code..."
