@@ -5,5 +5,5 @@ export default ({ env }) => ({
     keys: env.array('APP_KEYS'),
   },
   proxy: env.bool('IS_PROXIED', true),
-  url: env('PUBLIC_URL'), // Important for AWS/proxy setups
+  url: env('PUBLIC_URL', 'https://api.lattencreative.com'),
 });
