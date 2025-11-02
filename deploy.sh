@@ -7,6 +7,7 @@ set -e
 APP_ENV=${1:-production}   # default to production
 APP_BASE_DIR="/var/www"
 REPO_BRANCH="master"
+DOMAIN=${DOMAIN:-"lattencreative.com"}  # Set your domain here
 
 # For staging you could pass: ./deploy.sh staging
 if [ "$APP_ENV" = "staging" ]; then
@@ -14,11 +15,13 @@ if [ "$APP_ENV" = "staging" ]; then
   REPO_BRANCH="staging"
   PM2_STRAPI_NAME="lattencreative-api-staging"
   PM2_NEXT_NAME="lattencreative-website-staging"
+  DOMAIN=${DOMAIN:-"staging.lattencreative.com"}
 else
   DEPLOY_DIR="$APP_BASE_DIR/lattencreative.com"
   REPO_BRANCH="master"
   PM2_STRAPI_NAME="lattencreative-api"
   PM2_NEXT_NAME="lattencreative-website"
+  DOMAIN=${DOMAIN:-"lattencreative.com"}
 fi
 
 echo "=========================================="
@@ -53,6 +56,10 @@ npm ci --legacy-peer-deps
 npm run build
 
 echo "🔁 Restarting Strapi with PM2..."
+# Set SSL environment variables for AWS/Certbot setup
+export NODE_TLS_REJECT_UNAUTHORIZED=0  # Temporarily disable SSL verification
+export IS_PROXIED=true
+export PUBLIC_URL="https://$DOMAIN"
 pm2 restart "$PM2_STRAPI_NAME" || pm2 start npm --name "$PM2_STRAPI_NAME" -- run start
 
 # =====================================

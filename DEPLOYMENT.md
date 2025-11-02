@@ -84,6 +84,9 @@ DEPLOY_PATH=/var/www/lattencreative.com
 NEXT_PUBLIC_STRAPI_API_URL=https://api.yourdomain.com/api
 NEXT_PUBLIC_STRAPI_URL=https://api.yourdomain.com
 
+# Optional: Domain for SSL configuration
+DOMAIN=yourdomain.com
+
 # Optional: API Build Variables (if Strapi build needs DB access during CI)
 API_DATABASE_HOST=127.0.0.1
 API_DATABASE_PORT=3306
@@ -427,6 +430,33 @@ openssl s_client -connect your-domain.com:443 -servername your-domain.com < /dev
 ```
 
 ### 4. Troubleshooting Common Issues
+
+**SSL Certificate Chain Error (AWS/Certbot):**
+```bash
+# Error: self-signed certificate in certificate chain
+
+# Quick Fix: Run the provided SSL fix script
+cd /var/www/lattencreative.com
+chmod +x fix-ssl.sh
+./fix-ssl.sh yourdomain.com
+
+# Manual Solution 1: Configure Strapi for proxy mode
+# Add to your server's api/.env:
+IS_PROXIED=true
+PUBLIC_URL=https://yourdomain.com
+NODE_TLS_REJECT_UNAUTHORIZED=0  # Temporary fix
+
+# Manual Solution 2: Update certificate chain
+sudo certbot renew --deploy-hook "systemctl reload apache2"
+
+# Manual Solution 3: Check certificate installation
+openssl s_client -connect yourdomain.com:443 -servername yourdomain.com
+openssl verify /etc/letsencrypt/live/yourdomain.com/fullchain.pem
+
+# Manual Solution 4: Restart services in correct order
+pm2 restart all
+sudo systemctl restart apache2
+```
 
 **Check logs:**
 ```bash
