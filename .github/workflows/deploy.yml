@@ -64,7 +64,7 @@ jobs:
         key: ${{ secrets.AWS_SSH_KEY }}
         port: ${{ secrets.AWS_PORT }}
         script: |
-          cd ${{ secrets.DEPLOY_PATH }}
+          cd ${{ secrets.AWS_DEPLOY_PATH }}
           git pull origin master
           chmod +x deploy.sh
           chmod +x fix-ssl.sh

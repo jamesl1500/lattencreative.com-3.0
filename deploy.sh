@@ -57,9 +57,9 @@ npm run build
 
 echo "🔁 Restarting Strapi with PM2..."
 # Set SSL environment variables for AWS/Certbot setup
-export NODE_TLS_REJECT_UNAUTHORIZED=0  # Temporarily disable SSL verification
 export IS_PROXIED=true
-export PUBLIC_URL="https://$DOMAIN"
+export PUBLIC_URL="https://api.$DOMAIN"
+
 pm2 restart "$PM2_STRAPI_NAME" || pm2 start npm --name "$PM2_STRAPI_NAME" -- run start
 
 # =====================================
