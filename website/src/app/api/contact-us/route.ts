@@ -4,13 +4,6 @@ export async function POST(request: NextRequest) {
     try {
         const data = await request.json();
         
-        // Here you can use services like:
-        // - Nodemailer with SMTP
-        // - SendGrid
-        // - Resend
-        // - Mailgun
-        
-        // Example with fetch to a service like Resend:
         const response = await fetch('https://api.resend.com/emails', {
             method: 'POST',
             headers: {

@@ -5,7 +5,7 @@ export default function ContactUsForm() {
         e.preventDefault();
 
         // Handle form submission logic here
-        const formData = new FormData(e.currentTarget);
+        const formData = new FormData(e.currentTarget as HTMLFormElement);
         const data = Object.fromEntries(formData.entries());
 
         // You can now use the data object to send to your backend
@@ -29,8 +29,9 @@ export default function ContactUsForm() {
         });
 
         // Make sure all form fields are cleared after submission
-        for (let i = 0; i < e.currentTarget.elements.length; i++) {
-            const element = e.currentTarget.elements[i] as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+        const form = e.currentTarget as HTMLFormElement;
+        for (let i = 0; i < form.elements.length; i++) {
+            const element = form.elements[i] as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
             element.value = '';
         }
     };
