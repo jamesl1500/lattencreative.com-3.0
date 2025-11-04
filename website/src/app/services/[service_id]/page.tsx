@@ -98,25 +98,19 @@ export default async function ServicePage({ params }: ServicePageProps) {
         </section>
 
         {/* Features Section */}
-        {service.features && (
+        {service.features && service.features.length > 0 && (
           <section className="service-section service-features">
             <div className="service-section-inner">
               <h2>What's Included</h2>
               <div className="features-grid">
-                {service.features
-                  .split(",\n")
-                  .map((feature: string, index: number) => {
-                    const [title, description] = feature.split(" - ");
-                    return (
-                      <div key={index} className="feature-item">
-                        <div className="feature-icon">✓</div>
-                        <div className="feature-content">
-                          <h3>{title.slice(1)}</h3>
-                          {description && <p>{description.slice(0, -1)}</p>}
-                        </div>
-                      </div>
-                    );
-                  })}
+                {service.features.map((feature: string, index: number) => (
+                  <div key={index} className="feature-item">
+                    <div className="feature-icon">✓</div>
+                    <div className="feature-content">
+                      <h3>{feature}</h3>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </section>
@@ -167,11 +161,9 @@ export default async function ServicePage({ params }: ServicePageProps) {
                       <p>{plan.description}</p>
                     </div>
                     <ul className="pricing-features">
-                      {plan.features
-                        .split(",")
-                        .map((feature: string, featureIndex: number) => (
-                          <li key={featureIndex}>{feature}</li>
-                        ))}
+                      {plan.features.map((feature: string, featureIndex: number) => (
+                        <li key={featureIndex}>{feature}</li>
+                      ))}
                     </ul>
                     <Link
                       href={`/contact-us?plan=${plan.title}&service=${service.slug}`}

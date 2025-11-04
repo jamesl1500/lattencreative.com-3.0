@@ -4,91 +4,40 @@
  *
  * @module data/blog
  */
-import { fetchFromStrapi } from "../api";
+import { 
+  STATIC_BLOG_POSTS,
+  getAllBlogPosts as getStaticBlogPosts,
+  getBlogPostBySlug as getStaticBlogPostBySlug,
+  getBlogPostsByCategory as getStaticBlogPostsByCategory,
+  getRelatedPosts as getStaticRelatedPosts,
+  getBlogPostPaths as getStaticBlogPostPaths,
+  getFeaturedBlogPosts as getStaticFeaturedBlogPosts,
+  blogCategories as staticBlogCategories,
+  type BlogPost
+} from "./static-blog";
 
-/**
- * Blog post data structure
- */
-export interface BlogPost {
-  id: string;
-  title: string;
-  slug: string;
-  description: string;
-  content: string;
-  publishedDate: string;
-  author: {
-    name: string;
-    title: string;
-    avatar?: string;
-  };
-  category: string;
-  tags: string[] | string;
-  readTime: number; // in minutes
-  featured: boolean;
-  image?:
-    | {
-        url: string;
-        formats?: any;
-      }
-    | string;
-}
-
-/**
- * Blog post data cache
- * This will store the fetched blog posts
- */
-let blogPostsCache: BlogPost[] = [];
-
-/**
- * Singular blog post
- * This will store the singular blog post
- */
-let blogPost: BlogPost[] = [];
+// Re-export types for backward compatibility
+export type { BlogPost };
 
 /**
  * Blog Categories
  * This is a static list of blog categories. Adjust as needed.
  */
-export const blogCategories = [
-  "All",
-  "Design Trends",
-  "Development",
-  "Marketing",
-  "Branding",
-  "Design",
-];
+export const blogCategories = staticBlogCategories;
 
 /**
  * FetchBlogPostsFromAPI
- * This function can be implemented to fetch blog posts from an external API or CMS.
+ * Now returns static data instead of API calls
  *
  * @return Promise resolving to an array of BlogPost
  */
 export const fetchBlogPostsFromAPI = async (): Promise<BlogPost[]> => {
-  try {
-    // Try to fetch from the API first
-    const data = await fetchFromStrapi("/blog-posts?populate=*");
-
-    if (!data.data) {
-      console.warn("Error: No blog posts returned");
-      return blogPostsCache;
-    }
-
-    if (Array.isArray(data.data) && data.data.length > 0) {
-      // Update cache and return API data
-      blogPostsCache = data.data as BlogPost[];
-      return blogPostsCache;
-    }
-  } catch (error) {
-    console.warn("API not available, using dummy data:", error);
-  }
-
-  return blogPostsCache;
+  return getStaticBlogPosts();
 };
 
 /**
  * FetchBlogPostFromApi
- * This function will fetch a single blog post from the API
+ * This function will fetch a single blog post from static data
  *
  * @return Promise resolving to an array
  */
@@ -97,20 +46,8 @@ export const fetchBlogPostFromAPI = async ({
 }: {
   slug: string;
 }): Promise<BlogPost[]> => {
-  try {
-    const data = await fetchFromStrapi(`/blog-posts?slug=${slug}&populate=*`);
-    if (!data.data || data.data.length === 0) {
-      console.warn("Error: No blog post returned");
-      return blogPost;
-    }
-
-    blogPost = data.data as BlogPost[];
-    return blogPost;
-  } catch (error) {
-    console.warn("API not available, returning nothing", error);
-  }
-
-  return blogPost;
+  const post = await getStaticBlogPostBySlug(slug);
+  return post ? [post] : [];
 };
 
 /**
@@ -118,7 +55,7 @@ export const fetchBlogPostFromAPI = async ({
  * @returns Promise resolving to array of all blog posts
  */
 export async function getAllBlogPosts(): Promise<BlogPost[]> {
-  return await fetchBlogPostsFromAPI();
+  return getStaticBlogPosts();
 }
 
 /**
@@ -129,8 +66,7 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
 export async function getBlogPostBySlug(
   slug: string,
 ): Promise<BlogPost | null> {
-  const posts = await fetchBlogPostFromAPI({ slug });
-  return posts.length > 0 ? posts[0] : null;
+  return getStaticBlogPostBySlug(slug);
 }
 
 /**
@@ -141,9 +77,7 @@ export async function getBlogPostBySlug(
 export async function getBlogPostsByCategory(
   category: string,
 ): Promise<BlogPost[]> {
-  const posts = await fetchBlogPostsFromAPI();
-  if (category === "All") return posts;
-  return posts.filter((post: BlogPost) => post.category === category);
+  return getStaticBlogPostsByCategory(category);
 }
 
 /**
@@ -156,26 +90,7 @@ export async function getRelatedPosts(
   currentPostId: string,
   limit: number = 3,
 ): Promise<BlogPost[]> {
-  const posts = await fetchBlogPostsFromAPI();
-  const currentPost = posts.find((post: BlogPost) => post.id === currentPostId);
-  if (!currentPost) return [];
-
-  return posts
-    .filter((post: BlogPost) => {
-      const postTags = Array.isArray(post.tags)
-        ? post.tags
-        : (post.tags as string).split(",").map((tag) => tag.trim());
-      const currentPostTags = Array.isArray(currentPost.tags)
-        ? currentPost.tags
-        : (currentPost.tags as string).split(",").map((tag) => tag.trim());
-
-      return (
-        post.id !== currentPostId &&
-        (post.category === currentPost.category ||
-          postTags.some((tag: string) => currentPostTags.includes(tag)))
-      );
-    })
-    .slice(0, limit);
+  return getStaticRelatedPosts(currentPostId, limit);
 }
 
 /**
@@ -183,6 +98,14 @@ export async function getRelatedPosts(
  * @returns Promise resolving to array of blog post slugs
  */
 export async function getBlogPostPaths(): Promise<string[]> {
-  const posts = await fetchBlogPostsFromAPI();
-  return posts.map((post: BlogPost) => post.slug);
+  return getStaticBlogPostPaths();
+}
+
+/**
+ * Get featured blog posts
+ * @param limit The maximum number of featured posts to return
+ * @returns Promise resolving to array of featured blog posts
+ */
+export async function getFeaturedBlogPosts(limit: number = 3): Promise<BlogPost[]> {
+  return getStaticFeaturedBlogPosts(limit);
 }

@@ -38,7 +38,7 @@ export async function generateMetadata({
     Array.isArray(post.tags)
       ? post.tags
       : (post.tags as string).split(",").map((tag) => tag.trim()),
-    typeof post.image === "string" ? post.image : post.image?.url,
+    post.image,
   );
 }
 
