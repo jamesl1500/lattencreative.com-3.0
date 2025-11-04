@@ -104,8 +104,8 @@ export default function ContactUs() {
                   Prefer to talk? Give us a call during business hours for
                   immediate assistance.
                 </p>
-                <a href="tel:+1234567890" className="contact-link">
-                  (123) 456-7890
+                <a href="tel:+14406875983" className="contact-link">
+                  +1 (440) 687-5983
                 </a>
               </div>
 
@@ -125,13 +125,13 @@ export default function ContactUs() {
                 </div>
                 <h3>Visit Us</h3>
                 <p>
-                  Stop by our office for a coffee and chat about your project in
-                  person.
+                  We are a virtual agency, but feel free to send us mail at our
+                  office address.
                 </p>
                 <address className="contact-link">
-                  123 Creative Street
+                  4600 Timberview Dr
                   <br />
-                  Design District, DC 12345
+                  Lorain, Ohio 44053
                 </address>
               </div>
             </div>
@@ -376,7 +376,7 @@ export default function ContactUs() {
                 >
                   Send Us an Email
                 </a>
-                <a href="tel:+1234567890" className="btn btn-secondary">
+                <a href="tel:+14406875983" className="btn btn-secondary">
                   Call Now
                 </a>
               </div>
